@@ -17,12 +17,12 @@ const Project = () => {
     <>
       <div>
         <h1 className="text-center mt-2">Projects</h1>
-        <div>
+        <div className="container border rounded">
           {project.map((project, index) => (
-            <div key={index}>
-              <p>{project.Title}</p>
-              <p>{project.Date}</p>
-              <p>{project.Description}</p>
+            <div key={index} className="card">
+              <p className="card-title">{project.Title}</p>
+              <p className="card-body">{project.Date}</p>
+              <p className="card-body">{project.Description}</p>
             </div>
           ))}
         </div>

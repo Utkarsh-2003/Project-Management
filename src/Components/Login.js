@@ -44,13 +44,13 @@ const Login = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container shadow border rounded p-1 mt-2">
       <div className="row justify-content-center align-items-center mt-5">
         <div className="col-md-6">
           <img src={main} alt="logo" style={{ width: "100%" }} />
         </div>
         <div className="col-md-4">
-          <div className="card">
+          <div className="card shadow bg-light">
             <div className="card-body">
               <h2 className="card-title text-center mb-4">Login</h2>
               <form
@@ -58,7 +58,7 @@ const Login = () => {
                 onSubmit={handleSubmit}
                 style={{ maxWidth: "250px", margin: "0 auto" }}
               >
-                <div className="mb-3">
+                <div className="form-floating mb-3">
                   <input
                     type="email"
                     className="form-control"
@@ -67,8 +67,9 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
+                  <label for="floatingInput">Email address</label>
                 </div>
-                <div className="mb-3 position-relative">
+                <div className="form-floating mb-3 position-relative">
                   <input
                     type={type}
                     placeholder="Password"
@@ -76,6 +77,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                  <label for="floatingInput">Password</label>
                   <span
                     className="position-absolute end-0 top-50 translate-middle-y"
                     onClick={handleHidePassword}

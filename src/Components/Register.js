@@ -73,7 +73,7 @@ const Register = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container border rounded shadow mt-2 p-1">
       <div className="row">
         <div className="col-md-7 d-flex justify-content-center align-items-center">
           <img
@@ -83,14 +83,14 @@ const Register = () => {
           />
         </div>
         <div className="col-md-5">
-          <div className="container py-3 text-center border rounded mt-5 bg-white">
+          <div className="container register-container py-3 text-center border rounded bg-light shadow">
             <h2 className="text-center mb-4">Register</h2>
             <form
               className="form-container"
               onSubmit={handleSubmit}
               style={{ maxWidth: "300px", margin: "0 auto" }}
             >
-              <div className="form-group mb-2">
+              <div className="form-floating form-group mb-2">
                 <input
                   type="text"
                   id="username"
@@ -100,8 +100,9 @@ const Register = () => {
                   onChange={(e) => setUsername(e.target.value)}
                   required
                 />
+                <label for="floatingInput">Username</label>
               </div>
-              <div className="form-group mb-2">
+              <div className="form-floating form-group mb-2">
                 <input
                   type="text"
                   id="name"
@@ -111,8 +112,9 @@ const Register = () => {
                   onChange={(e) => setName(e.target.value)}
                   required
                 />
+                <label for="floatingInput">Name</label>
               </div>
-              <div className="form-group mb-2">
+              <div className="form-floating form-group mb-2">
                 <input
                   type="email"
                   id="email"
@@ -122,8 +124,9 @@ const Register = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
+                <label for="floatingInput">Email address</label>
               </div>
-              <div className="form-group mb-2 position-relative">
+              <div className="form-floating form-group mb-2 position-relative">
                 <input
                   type={type}
                   placeholder="Password"
@@ -132,6 +135,7 @@ const Register = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+                <label for="floatingInput">Password</label>
                 <span
                   className="position-absolute end-0 top-50 translate-middle-y"
                   onClick={handleHidePassword}
@@ -140,7 +144,7 @@ const Register = () => {
                   <FontAwesomeIcon icon={icon}></FontAwesomeIcon>
                 </span>
               </div>
-              <div className="form-group mb-2">
+              <div className="form-floating form-group mb-2">
                 <input
                   type="password"
                   placeholder="Confirm Password"
@@ -149,6 +153,7 @@ const Register = () => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                 />
+                <label for="floatingInput">Confirm Password</label>
               </div>
               <div>
                 <select

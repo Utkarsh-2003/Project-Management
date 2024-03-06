@@ -19,7 +19,7 @@ const AddProject = () => {
             .add({
               ProjectId: projectId,
               Title: title,
-              Date: date,
+              DueDate: date,
               Description: description,
             })
             .then((docRef) => {
@@ -31,6 +31,7 @@ const AddProject = () => {
             });
         } else {
           console.log("Duplicate Project found");
+          alert("This project name already exists.");
         }
       })
       .catch((error) => {

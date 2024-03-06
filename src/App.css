@@ -3,51 +3,47 @@
 }
 
 body {
-  background: hsla(172, 68%, 65%, 1);
-
-  background: linear-gradient(
-    90deg,
-    hsla(172, 68%, 65%, 1) 0%,
-    hsla(246, 37%, 63%, 1) 100%
+  background-image: linear-gradient(
+    to bottom,
+    #add8e6,
+    #8be1e7,
+    #71e8d8,
+    #72edba,
+    #90ee90
   );
-
-  background: -moz-linear-gradient(
-    90deg,
-    hsla(172, 68%, 65%, 1) 0%,
-    hsla(246, 37%, 63%, 1) 100%
-  );
-
-  background: -webkit-linear-gradient(
-    90deg,
-    hsla(172, 68%, 65%, 1) 0%,
-    hsla(246, 37%, 63%, 1) 100%
-  );
-
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#6BE3D3", endColorstr="#857EC4", GradientType=1 );
 }
 
-.form-container{
+.container{
+  background: aliceblue;
+}
+
+.register-container{
+  margin-left: -30px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.form-container {
   margin-left: 36px;
 }
 
-
-.container-form{
+.container-form {
   margin-left: 36px;
 }
 
-.nav-container{
+.nav-container {
   margin-right: 20px;
 }
 
-.badge-container{
+.badge-container {
   margin-left: -15px;
   margin-top: 2px;
 }
 
-.logo{
+.logo {
   margin-left: 5px;
 }
 
-.logo-home{
+.logo-home {
   margin-left: 45px;
 }
