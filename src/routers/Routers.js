@@ -10,6 +10,8 @@ import Project from '../Components/Project';
 import Pending from '../Components/Pending';
 import Completed from '../Components/Completed';
 import Profile  from '../Components/Profile';
+import ProjectInfromation from '../Components/ProjectInfromation';
+import Task from '../Components/Task';
 
 const Routers = () => {
   return (
@@ -21,10 +23,12 @@ const Routers = () => {
         <Route path='/profile' element={<Profile />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/project' element={<Project />} />
+        <Route path='/project/:id' element={<ProjectInfromation />} />
         <Route path='/pending' element={<Pending />} />
         <Route path='/complete' element={<Completed />} />
         <Route path='/admin/dashboard' element={<AdminDashboard />} />
         <Route path='/admin/add' element={<AddProject />} />
+        <Route path='/admin/task' element={<Task />} />
       </Routes>
     </div>
   )

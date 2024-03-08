@@ -80,7 +80,7 @@ const Profile = () => {
           <h1 className="text-center mt-2">Profile</h1>
           <div
             className="container-sm border border-3 bg-white shadow rounded p-3 mt-3 mb-3"
-            style={{maxWidth: "400px"}}
+            style={{ maxWidth: "400px" }}
           >
             <div className="d-flex align-items-center">
               <div className="mb-2">
@@ -92,7 +92,9 @@ const Profile = () => {
                 />
               </div>
               <div className="ms-3 mt-0 p-2">
-                <span className="d-block"><strong>{name}</strong></span>
+                <span className="d-block">
+                  <strong>{name}</strong>
+                </span>
                 <span className="d-block">{email}</span>
               </div>
             </div>
@@ -187,7 +189,7 @@ const Profile = () => {
 
               <div className="form-group row mt-3 text-center mb-2">
                 <div className="col-sm-10 ">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-success">
                     Update
                   </button>
                 </div>

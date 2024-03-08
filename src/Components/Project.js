@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../Firebase";
+import { useNavigate } from "react-router-dom";
 
 const Project = () => {
   const [projects, setProjects] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = db.collection("Projects").onSnapshot((snapshot) => {
@@ -24,7 +26,11 @@ const Project = () => {
             ) : (
               projects.map((project, index) => (
                 <div key={index} className="col">
-                  <div className="card h-100 shadow" onClick={() => alert("Coming Soon!")}>
+                  <div
+                    className="card h-100 shadow"
+                    onClick={() => navigate(`/project/${project.ProjectId}`)}
+                    style={{ cursor: "pointer" }}
+                  >
                     <div className="card-body">
                       <h5 className="card-title">{project.Title}</h5>
                       <p className="card-text">{project.DueDate}</p>

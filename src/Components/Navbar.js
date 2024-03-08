@@ -31,12 +31,14 @@ const Navbar = () => {
             <>
               <nav class="navbar navbar-expand-lg bg-dark">
                 <div class="container-fluid">
-                  <img
-                    src={Logo}
-                    alt="Logo"
-                    className="mx-4"
-                    style={{ height: "50px", width: "50px" }}
-                  />
+                  <Link to="/">
+                    <img
+                      src={Logo}
+                      alt="Logo"
+                      className="mx-4"
+                      style={{ height: "50px", width: "50px" }}
+                    />
+                  </Link>
                   <button
                     class="navbar-toggler bg-white"
                     type="button"
@@ -67,6 +69,14 @@ const Navbar = () => {
                           to="/admin/add"
                         >
                           Add Projects
+                        </Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link
+                          className="navbar-brand text-light mx-3"
+                          to="/admin/task"
+                        >
+                          Tasks
                         </Link>
                       </li>
                     </ul>
@@ -114,12 +124,14 @@ const Navbar = () => {
             <>
               <nav class="navbar navbar-expand-lg bg-dark text-white">
                 <div class="container-fluid">
-                  <img
-                    src={Logo}
-                    alt="Logo"
-                    className="mx-4"
-                    style={{ height: "50px", width: "50px" }}
-                  />
+                  <Link to="/">
+                    <img
+                      src={Logo}
+                      alt="Logo"
+                      className="mx-4"
+                      style={{ height: "50px", width: "50px" }}
+                    />
+                  </Link>
                   <button
                     class="navbar-toggler bg-white"
                     type="button"
@@ -219,12 +231,14 @@ const Navbar = () => {
         <>
           <nav className="navbar navbar-expand-lg bg-dark py-2">
             <div className="container-fluid">
-              <img
-                src={Logo}
-                alt="Logo"
-                className="mx-4"
-                style={{ height: "50px", width: "50px" }}
-              />
+              <Link to="/">
+                <img
+                  src={Logo}
+                  alt="Logo"
+                  className="mx-4"
+                  style={{ height: "50px", width: "50px" }}
+                />
+              </Link>
               <button
                 className="navbar-toggler bg-white"
                 type="button"

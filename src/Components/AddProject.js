@@ -60,6 +60,7 @@ const AddProject = () => {
               DueDate: date,
               Description: description,
               SelectedUsers: selectedUsers,
+              
             })
             .then((docRef) => {
               console.log("Project Added:", docRef.id);
@@ -202,7 +203,7 @@ const AddProject = () => {
           <tbody>
             {projects.map((project, index) => (
               <tr key={index}>
-                <td>{project.Title}</td>
+                <td className="text-center">{project.Title}</td>
                 <td>
                   <button
                     className="btn text-warning fa-solid fa-pen-to-square"
