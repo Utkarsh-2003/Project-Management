@@ -192,7 +192,9 @@ const Navbar = () => {
                         aria-labelledby="userDropdown"
                       >
                         <li>
-                          <p className="dropdown-item">Hi, {user.email}!</p>
+                          <Link to="/profile" className="text-decoration-none">
+                            <p className="dropdown-item">Hi, {user.email}!</p>
+                          </Link>
                         </li>
                         <li>
                           <hr className="dropdown-divider" />
@@ -238,8 +240,7 @@ const Navbar = () => {
                 className="collapse navbar-collapse"
                 id="navbarSupportedContent"
               >
-                <div className="navbar-nav me-auto mb-2 mb-lg-0">
-                </div>
+                <div className="navbar-nav me-auto mb-2 mb-lg-0"></div>
                 <div className="ml-auto">
                   <Link to="/login" className="btn btn-primary mx-2 mb-2 mt-1">
                     Login

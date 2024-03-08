@@ -73,113 +73,114 @@ const Register = () => {
   };
 
   return (
-    <div className="container border rounded shadow mt-2 p-1">
-      <div className="row">
-        <div className="col-md-7 d-flex justify-content-center align-items-center">
-          <img
-            src={Gif}
-            alt="gif"
-            style={{ maxWidth: "100%", height: "auto" }}
-          />
-        </div>
-        <div className="col-md-5">
-          <div className="container register-container py-3 text-center border rounded bg-light shadow">
-            <h2 className="text-center mb-4">Register</h2>
-            <form
-              className="form-container"
-              onSubmit={handleSubmit}
-              style={{ maxWidth: "300px", margin: "0 auto" }}
-            >
-              <div className="form-floating form-group mb-2">
-                <input
-                  type="text"
-                  id="username"
-                  className="form-control form-control-lg"
-                  value={username}
-                  placeholder="Username"
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-                <label for="floatingInput">Username</label>
-              </div>
-              <div className="form-floating form-group mb-2">
-                <input
-                  type="text"
-                  id="name"
-                  className="form-control form-control-lg"
-                  value={name}
-                  placeholder="Name"
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-                <label for="floatingInput">Name</label>
-              </div>
-              <div className="form-floating form-group mb-2">
-                <input
-                  type="email"
-                  id="email"
-                  className="form-control form-control-lg"
-                  value={email}
-                  placeholder="Email address"
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <label for="floatingInput">Email address</label>
-              </div>
-              <div className="form-floating form-group mb-2 position-relative">
-                <input
-                  type={type}
-                  placeholder="Password"
-                  className="form-control form-control-lg"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <label for="floatingInput">Password</label>
-                <span
-                  className="position-absolute end-0 top-50 translate-middle-y"
-                  onClick={handleHidePassword}
-                  style={{ cursor: "pointer", marginRight: "10px" }}
-                >
-                  <FontAwesomeIcon icon={icon}></FontAwesomeIcon>
-                </span>
-              </div>
-              <div className="form-floating form-group mb-2">
-                <input
-                  type="password"
-                  placeholder="Confirm Password"
-                  className="form-control form-control-lg"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-                <label for="floatingInput">Confirm Password</label>
-              </div>
-              <div>
-                <select
-                  onChange={(e) => setRole(e.target.value)}
-                  className="mb-2 form-select py-2"
-                  id="role"
-                  value={role}
-                  required
-                >
-                  <option selected disabled value="">Select Role...</option>
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </div>
-              <div className="text-center mb-2">
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                >
-                  Register
-                </button>
-              </div>
-              <div className="text-center">
-                <Link to="/login">Already have an account?</Link>
-              </div>
-            </form>
+    <div className="p-3">
+      <div className="container border rounded shadow mt-2 p-3">
+        <div className="row">
+          <div className="col-md-7 d-flex justify-content-center align-items-center">
+            <img
+              src={Gif}
+              alt="gif"
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
+          </div>
+          <div className="col-md-5">
+            <div className="container register-container py-3 text-center border rounded bg-light shadow">
+              <h2 className="text-center mb-4">Register</h2>
+              <form
+                className="form-container"
+                onSubmit={handleSubmit}
+                style={{ maxWidth: "300px", margin: "0 auto" }}
+              >
+                <div className="form-floating form-group mb-2">
+                  <input
+                    type="text"
+                    id="username"
+                    className="form-control form-control-lg"
+                    value={username}
+                    placeholder="Username"
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                  />
+                  <label for="floatingInput">Username</label>
+                </div>
+                <div className="form-floating form-group mb-2">
+                  <input
+                    type="text"
+                    id="name"
+                    className="form-control form-control-lg"
+                    value={name}
+                    placeholder="Name"
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                  <label for="floatingInput">Name</label>
+                </div>
+                <div className="form-floating form-group mb-2">
+                  <input
+                    type="email"
+                    id="email"
+                    className="form-control form-control-lg"
+                    value={email}
+                    placeholder="Email address"
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <label for="floatingInput">Email address</label>
+                </div>
+                <div className="form-floating form-group mb-2 position-relative">
+                  <input
+                    type={type}
+                    placeholder="Password"
+                    className="form-control form-control-lg"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <label for="floatingInput">Password</label>
+                  <span
+                    className="position-absolute end-0 top-50 translate-middle-y"
+                    onClick={handleHidePassword}
+                    style={{ cursor: "pointer", marginRight: "10px" }}
+                  >
+                    <FontAwesomeIcon icon={icon}></FontAwesomeIcon>
+                  </span>
+                </div>
+                <div className="form-floating form-group mb-2">
+                  <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    className="form-control form-control-lg"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                  />
+                  <label for="floatingInput">Confirm Password</label>
+                </div>
+                <div>
+                  <select
+                    onChange={(e) => setRole(e.target.value)}
+                    className="mb-2 form-select py-2"
+                    id="role"
+                    value={role}
+                    required
+                  >
+                    <option selected disabled value="">
+                      Select Role...
+                    </option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
+                <div className="text-center mb-2">
+                  <button type="submit" className="btn btn-primary">
+                    Register
+                  </button>
+                </div>
+                <div className="text-center">
+                  <Link to="/login">Already have an account?</Link>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>

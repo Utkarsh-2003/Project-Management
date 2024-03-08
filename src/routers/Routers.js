@@ -9,6 +9,7 @@ import AddProject from '../Components/AddProject';
 import Project from '../Components/Project';
 import Pending from '../Components/Pending';
 import Completed from '../Components/Completed';
+import Profile  from '../Components/Profile';
 
 const Routers = () => {
   return (
@@ -17,6 +18,7 @@ const Routers = () => {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />}/>
         <Route path='/register' element={<Register />} />
+        <Route path='/profile' element={<Profile />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/project' element={<Project />} />
         <Route path='/pending' element={<Pending />} />
