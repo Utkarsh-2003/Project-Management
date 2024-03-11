@@ -28,7 +28,6 @@ const Project = () => {
                     <div className="card-body">
                       <h5 className="card-title">{project.Title}</h5>
                       <p className="card-text">{project.DueDate}</p>
-                      <p className="card-text">{project.Description}</p>
                     </div>
                   </div>
                 </div>

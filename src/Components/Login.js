@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import main from "./Images/happy-employees.gif";
-import auth, { db } from "../Firebase";
+import auth from "../Firebase";
 import { signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { loginAdmin, loginUser } from "../Redux/userSlice";

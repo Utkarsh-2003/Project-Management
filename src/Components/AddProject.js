@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { db } from "../Firebase";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { useNavigate } from "react-router-dom";
 
 const AddProject = () => {
   const projectId = uuidv4();
@@ -13,6 +14,7 @@ const AddProject = () => {
   const [editingProjectId, setEditingProjectId] = useState(null);
   const [users, setUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]); // State to store selected users
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = db.collection("Projects").onSnapshot((snapshot) => {
@@ -35,7 +37,12 @@ const AddProject = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title.trim() || !date || !description.trim() || selectedUsers.length === 0) {
+    if (
+      !title.trim() ||
+      !date ||
+      !description.trim() ||
+      selectedUsers.length === 0
+    ) {
       alert("Fill in all the details.");
       return;
     }
@@ -60,11 +67,12 @@ const AddProject = () => {
               DueDate: date,
               Description: description,
               SelectedUsers: selectedUsers,
-              
+              Tasks: [],
             })
             .then((docRef) => {
               console.log("Project Added:", docRef.id);
               alert("Project Added.");
+              navigate(`/admin/${projectId}/addtask`);
               setTitle("");
               setDate("");
               setDescription("");
@@ -97,7 +105,12 @@ const AddProject = () => {
   const handleSaveEditProduct = (e) => {
     e.preventDefault();
 
-    if (!title.trim() || !date || !description.trim() || selectedUsers.length === 0) {
+    if (
+      !title.trim() ||
+      !date ||
+      !description.trim() ||
+      selectedUsers.length === 0
+    ) {
       alert("Fill in all the details.");
       return;
     }
@@ -181,10 +194,7 @@ const AddProject = () => {
                 value={selectedUsers} // Set selected users
                 onChange={(selected) => setSelectedUsers(selected)} // Update selected users
               />
-              <button
-                type="submit"
-                className="button btn btn-success"
-              >
+              <button type="submit" className="button btn btn-success">
                 {editingProjectId ? "Save" : "Add Project"}
               </button>
             </form>
@@ -196,19 +206,21 @@ const AddProject = () => {
         >
           <thead className="thead-dark">
             <tr>
-              <th className="text-center">Name</th>
+              <th className="text-center">Project Name</th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             {projects.map((project, index) => (
-              <tr key={index}>
+              <tr className="mx-2" key={index}>
                 <td className="text-center">{project.Title}</td>
                 <td>
                   <button
-                    className="btn text-warning fa-solid fa-pen-to-square"
+                    className="mx-2 btn text-warning fa-solid fa-pen-to-square"
+                    title="Edit project"
                     onClick={() => handleEditProject(project.id)}
                   ></button>
+                  <button className="btn btn-primary" onClick={() => navigate(`/admin/${project.ProjectId}/addtask`)}>Add Task</button>
                 </td>
               </tr>
             ))}

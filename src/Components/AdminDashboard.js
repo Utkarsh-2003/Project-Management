@@ -52,6 +52,7 @@ const AdminDashboard = () => {
                           <h5 className="card-title position-relative">
                             {project.Title}
                             <button
+                              title="Remove"
                               className="btn text-danger text-decoration-none fa-solid fa-trash-can position-absolute top-0 end-0 mt-1"
                               onClick={() => handleRemoveProject(project.id)}
                               style={{ cursor: "pointer" }}

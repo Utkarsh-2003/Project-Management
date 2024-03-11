@@ -1,10 +1,11 @@
 import React from "react";
 import "../App.css";
 import Logo from "./Images/Logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { logoutAdmin, logoutUser } from "../Redux/userSlice";
+import Login from "./Login";
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
@@ -31,14 +32,22 @@ const Navbar = () => {
             <>
               <nav class="navbar navbar-expand-lg bg-dark">
                 <div class="container-fluid">
-                  <Link to="/">
-                    <img
-                      src={Logo}
-                      alt="Logo"
-                      className="mx-4"
-                      style={{ height: "50px", width: "50px" }}
-                    />
-                  </Link>
+                  {isAuthenticated ? (
+                    <>
+                      <Link to="dashboard">
+                        <img
+                          src={Logo}
+                          alt="Logo"
+                          className="mx-4"
+                          style={{ height: "50px", width: "50px" }}
+                        />
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Login />
+                    </>
+                  )}
                   <button
                     class="navbar-toggler bg-white"
                     type="button"
@@ -69,14 +78,6 @@ const Navbar = () => {
                           to="/admin/add"
                         >
                           Add Projects
-                        </Link>
-                      </li>
-                      <li class="nav-item">
-                        <Link
-                          className="navbar-brand text-light mx-3"
-                          to="/admin/task"
-                        >
-                          Tasks
                         </Link>
                       </li>
                     </ul>
@@ -124,14 +125,22 @@ const Navbar = () => {
             <>
               <nav class="navbar navbar-expand-lg bg-dark text-white">
                 <div class="container-fluid">
-                  <Link to="/">
-                    <img
-                      src={Logo}
-                      alt="Logo"
-                      className="mx-4"
-                      style={{ height: "50px", width: "50px" }}
-                    />
-                  </Link>
+                  {isAuthenticated ? (
+                    <>
+                      <Link to="dashboard">
+                        <img
+                          src={Logo}
+                          alt="Logo"
+                          className="mx-4"
+                          style={{ height: "50px", width: "50px" }}
+                        />
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Login />
+                    </>
+                  )}
                   <button
                     class="navbar-toggler bg-white"
                     type="button"
@@ -159,9 +168,9 @@ const Navbar = () => {
                       <li class="nav-item">
                         <Link
                           className="navbar-brand text-light mx-3"
-                          to="/project"
+                          to="/myprojects"
                         >
-                          All Projects
+                          My Projects
                         </Link>
                       </li>
                       <li class="nav-item">
