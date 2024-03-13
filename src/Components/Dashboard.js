@@ -36,17 +36,19 @@ const Dashboard = () => {
                     projects.map((project, index) => (
                       <div key={index} className="col">
                         <div
-                          className="card h-100 shadow"
+                          className="card shadow"
                           onClick={() =>
                             navigate(`/dashboard/project/${project.ProjectId}`)
                           }
-                          style={{ cursor: "pointer" }}
+                          style={{ cursor: "pointer", maxWidth: "350px" }}
                         >
-                          <div className="card-body">
-                            <h4 className="card-title">{project.Title}</h4>
+                          <div class="card-header fs-2">{project.Title}</div>
+                          <div class="card-body">
                             <div className="d-flex">
                               <strong> Due Date:</strong> &nbsp;
-                              <p className="card-text">{formatDate(project.DueDate)}</p>
+                              <p className="card-text">
+                                {formatDate(project.DueDate)}
+                              </p>
                             </div>
                           </div>
                         </div>

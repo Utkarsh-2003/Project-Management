@@ -17,6 +17,11 @@ const MyProject = () => {
     return () => unsubscribe();
   }, [user]);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`; // Format as DD/MM/YYYY
+  };
+
   return (
     <>
       <div className="p-3">
@@ -34,7 +39,7 @@ const MyProject = () => {
                   >
                     <div className="card-body">
                       <h5 className="card-title">{project.Title}</h5>
-                      <p className="card-text">{project.DueDate}</p>
+                      <p className="card-text">{formatDate(project.DueDate)}</p>
                       <p className="card-text">{project.Description}</p>
                     </div>
                   </div>

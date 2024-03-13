@@ -1,4 +1,3 @@
-// AddTask.js
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../Firebase";
@@ -17,14 +16,16 @@ const AddTask = () => {
       .where("ProjectId", "==", projectId)
       .get()
       .then((snapshot) => {
-        const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         if (data.length > 0) {
           const projectData = data[0];
           setTasks(projectData.Tasks || []);
         }
       });
   }, [projectId]);
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,9 +40,11 @@ const AddTask = () => {
           querySnapshot.forEach((doc) => {
             let tasks = doc.data().Tasks;
             tasks.push({
-              TaskId : taskId,
+              TaskId: taskId,
               Title: title,
               Description: description,
+              Status: "In Process",
+              Percentage: 0,
             });
             doc.ref.update({
               Tasks: tasks,
@@ -101,7 +104,6 @@ const AddTask = () => {
             <tr>
               <th className="text-center">Task Name</th>
               <th className="text-center">Actions</th>
-              <th className="text-center">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -111,7 +113,6 @@ const AddTask = () => {
                 <td>
                   <button className="mx-2 btn text-warning fa-solid fa-pen-to-square"></button>
                 </td>
-                <td>Pending</td>
               </tr>
             ))}
           </tbody>

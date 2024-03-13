@@ -12,6 +12,7 @@ import Completed from "../Components/Completed";
 import Profile from "../Components/Profile";
 import ProjectInfromation from "../Components/ProjectInfromation";
 import AddTask from "../Components/AddTask";
+import ProjectDetails from "../Components/ProjectDetails";
 
 const Routers = () => {
   return (
@@ -29,6 +30,7 @@ const Routers = () => {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/add" element={<AddProject />} />
         <Route path="/admin/:projectId/addtask" element={<AddTask />} />
+        <Route path="/admin/dashboard/project/:id" element={<ProjectDetails />} />
       </Routes>
     </div>
   );

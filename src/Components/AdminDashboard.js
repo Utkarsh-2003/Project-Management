@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { db } from "../Firebase";
 import "../App.css";
 import Avatar from "react-avatar";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
   const [projects, setProjects] = useState([]);
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
   const handleRemoveProject = async (projectId) => {
     try {
@@ -34,6 +36,11 @@ const AdminDashboard = () => {
     return () => unsubscribe();
   }, []);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`; // Format as DD/MM/YYYY
+  };
+
   return (
     <>
       <div className="p-3">
@@ -47,18 +54,29 @@ const AdminDashboard = () => {
                 ) : (
                   projects.map((project, index) => (
                     <div key={index} className="col">
-                      <div className="card h-100 shadow">
+                      <div
+                        className="card shadow"
+                        onClick={() =>
+                          navigate(
+                            `/admin/dashboard/project/${project.ProjectId}`
+                          )
+                        }
+                        style={{ cursor: "pointer" }}
+                      >
                         <div className="card-body">
                           <h5 className="card-title position-relative">
                             {project.Title}
                             <button
                               title="Remove"
                               className="btn text-danger text-decoration-none fa-solid fa-trash-can position-absolute top-0 end-0 mt-1"
-                              onClick={() => handleRemoveProject(project.id)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleRemoveProject(project.id);
+                              }}
                               style={{ cursor: "pointer" }}
                             ></button>
                           </h5>
-                          <p className="card-text">{project.DueDate}</p>
+                          <p className="card-text">{formatDate(project.DueDate)}</p>
                           <p className="card-text">{project.Description}</p>
                           <div className="d-flex justify-content-start align-items-center">
                             {project.SelectedUsers.map((user, index) => (
@@ -88,6 +106,7 @@ const AdminDashboard = () => {
                   .sort((a, b) => a.name.localeCompare(b.name)) // Sort users alphabetically by name
                   .map((user, index) => (
                     <li key={index} className="d-flex align-items-center mb-3">
+                      <div className="container border rounded p-2 shadow">
                       <Avatar
                         name={user.name[0]}
                         size={40}
@@ -96,6 +115,7 @@ const AdminDashboard = () => {
                         title={user.name}
                       />
                       <span>{user.name}</span>
+                      </div>
                     </li>
                   ))}
               </ul>

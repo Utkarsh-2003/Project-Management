@@ -78,11 +78,74 @@ const ProjectDetails = () => {
           <button
             className="btn mx-1 mb-3 mt-3"
             title="back"
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/admin/dashboard")}
           >
             <i className="fa-solid fa-circle-arrow-left fs-3"></i>
           </button>
           <h2 className="text-center mb-4">{project.Title}</h2>
+          <div className="container p-3 border rounded mb-3 shadow">
+            <div
+              className="progress mb-3"
+              role="progressbar"
+              aria-label="Success example"
+              aria-valuenow="25"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              <div
+                class="progress-bar bg-success"
+                style={{ width: project_per + "%" }}
+              >
+                {project_per}%
+              </div>
+            </div>
+            <div className="row mx-2">
+              {loading ? (
+                <>loading...</>
+              ) : (
+                <>
+                  {project.Tasks.map((task, index) => (
+                    <div
+                      className="card text-center mx-2 p-0"
+                      key={index}
+                      style={{ maxWidth: "250px" }}
+                    >
+                      <div className="card-header">{task.Title}</div>
+                      <div className="card-body">
+                        <p className="card-text">
+                          {task.Percentage === 100 ? (
+                            <>
+                              <i className="fa-solid fa-circle-check fs-1 text-success"></i>
+                            </>
+                          ) : (
+                            <>
+                              <span className="border rounded p-1 shadow-sm container bg-info">
+                                {task.Percentage}%
+                              </span>
+                            </>
+                          )}
+                          <div>
+                            {task.Percentage === 100 ? (
+                              <>
+                                <div className="text-success">Completed</div>
+                              </>
+                            ) : (
+                              <>
+                                <div className="text-warning">In Process</div>
+                              </>
+                            )}
+                          </div>
+                        </p>
+                      </div>
+                      <div className="card-footer">
+                        <div>Work Percentage: {task.Percentage}%</div>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+          </div>
           <div className="row g-2">
             <div className="col-lg-8">
               <div>
@@ -154,7 +217,7 @@ const ProjectDetails = () => {
             </div>
             <div className="col-lg-4 mb-3">
               <div className="sidebar container shadow border rounded p-3">
-                <h2 className="mb-4 text-center">Colleagues</h2>
+                <h2 className="mb-4 text-center">Users</h2>
                 <ul className="list-unstyled">
                   {project.SelectedUsers &&
                     project.SelectedUsers.map((user, index) => (
