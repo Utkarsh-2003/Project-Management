@@ -4,6 +4,7 @@ import { db } from "../Firebase";
 import { v4 } from "uuid";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { toast } from "react-toastify";
 
 const AddTask = () => {
   const { projectId } = useParams();
@@ -20,8 +21,7 @@ const AddTask = () => {
   useEffect(() => {
     db.collection("Projects")
       .where("ProjectId", "==", projectId)
-      .get()
-      .then((snapshot) => {
+      .onSnapshot((snapshot) => {
         const data = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -60,7 +60,9 @@ const AddTask = () => {
                 Tasks: updatedTasks,
               });
             });
-            alert(`Task Updated`);
+            toast.success("Task Updated!", {
+              autoClose: 1500,
+            });
             setEditingTaskId(null);
             setTitle("");
             setDescription("");
@@ -83,7 +85,9 @@ const AddTask = () => {
                 Tasks: tasks,
               });
             });
-            alert(`Task Added`);
+            toast.success("New Task Added!", {
+              autoClose: 1500,
+            });
             setTitle("");
             setDescription("");
             setSelectedUsersForTask([]);
@@ -102,6 +106,26 @@ const AddTask = () => {
     }
   };
 
+  const removeTask = async (TaskId, Title) => {
+    if (window.confirm(`Are you sure to delete this Task: ${Title} ?`)) {
+      db.collection("Projects")
+        .where("ProjectId", "==", projectId)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const task = doc.data().Tasks.map((item) => item);
+            const new_task = task.filter((val) => val.TaskId !== TaskId);
+
+            doc.ref.update({ Tasks: new_task });
+          });
+
+          toast.error("Task Deleted!", {
+            autoClose: 1500,
+          });
+        });
+    }
+  };
+
   const animatedComponents = makeAnimated();
 
   const userOptions = selectedUsers.map((user) => ({
@@ -112,8 +136,12 @@ const AddTask = () => {
 
   return (
     <div>
-      <button className="btn" onClick={() => navigate(`/admin/add`)}>
-        Back
+      <button
+        className="btn mt-1"
+        title="back"
+        onClick={() => navigate("/admin/add")}
+      >
+        <i className="fa-solid fa-circle-arrow-left fs-3"></i>
       </button>
       {loading ? (
         <>loading...</>
@@ -159,9 +187,11 @@ const AddTask = () => {
                     value={selectedUsersForTask}
                     onChange={(selected) => setSelectedUsersForTask(selected)}
                   />
-                  <button type="submit" className="button btn btn-success">
-                    {editingTaskId ? "Update Task" : "Add Task"}
-                  </button>
+                  <div className="text-center">
+                    <button type="submit" className="btn btn-success">
+                      {editingTaskId ? "Update" : "Add"}
+                    </button>
+                  </div>
                 </form>
               </div>
             </div>
@@ -181,8 +211,12 @@ const AddTask = () => {
                     <td className="text-center">{task.Title}</td>
                     <td>
                       <button
-                        className="mx-2 btn text-warning fa-solid fa-pen-to-square"
+                        className="btn text-warning fa-solid fa-pen-to-square"
                         onClick={() => editTask(task.TaskId)}
+                      ></button>
+                      <button
+                        className="btn text-danger fa-solid fa-trash-can"
+                        onClick={() => removeTask(task.TaskId, task.Title)}
                       ></button>
                     </td>
                   </tr>

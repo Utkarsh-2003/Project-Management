@@ -105,7 +105,7 @@ const ProjectDetails = () => {
                     <h3 className="mx-2">Tasks</h3>
                     <div
                       className="card p-2 mt-3"
-                      style={{ maxWidth: "400px" }}
+                      style={{ maxWidth: "700px" }}
                     >
                       <table
                         className="table table-hover"
@@ -115,6 +115,7 @@ const ProjectDetails = () => {
                           <tr>
                             <th>Task Name</th>
                             <th>Description</th>
+                            <th>Colleagues</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -122,6 +123,13 @@ const ProjectDetails = () => {
                             <tr key={index}>
                               <td>{task.Title}</td>
                               <td>{task.Description}</td>
+                              <td>
+                                {task.SelectedUsers.map((user, index) => (
+                                  <div key={index}>
+                                    <span>{user.label}</span>
+                                  </div>
+                                ))}
+                              </td>
                             </tr>
                           ))}
                         </tbody>

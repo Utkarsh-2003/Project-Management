@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../Firebase";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Avatar from "react-avatar";
 
 const ProjectDetails = () => {
@@ -99,15 +99,19 @@ const ProjectDetails = () => {
         style={{ maxWidth: "1300px" }}
       >
         <div className="container-fluid">
-          <button
-            className="btn mx-1 mb-3 mt-3"
-            title="back"
-            onClick={() => navigate("/admin/dashboard")}
-          >
-            <i className="fa-solid fa-circle-arrow-left fs-3"></i>
-          </button>
-          <h2 className="text-center mb-4">{project.Title}</h2>
-          <div className="container p-3 border rounded mb-3 shadow">
+          <div className="d-flex  border rounded shadow-sm mb-3 p-2">
+            <button
+              className="btn"
+              title="back"
+              onClick={() => navigate("/admin/dashboard")}
+            >
+              <i className="fa-solid fa-circle-arrow-left fs-3"></i>
+            </button>
+            <div className="text-center flex-grow-1">
+              <h2>{project.Title}</h2>
+            </div>
+          </div>
+          <div className="p-3 border rounded mb-3 shadow">
             <div
               className="progress mb-3"
               role="progressbar"
@@ -130,7 +134,7 @@ const ProjectDetails = () => {
                 <>
                   {project.Tasks.map((task, index) => (
                     <div
-                      className="card text-center mx-3 my-1 p-0"
+                      className="card text-center mx-4 my-1 p-0"
                       key={index}
                       style={{ maxWidth: "250px" }}
                     >
@@ -147,7 +151,7 @@ const ProjectDetails = () => {
                               <span className="badge rounded-pill p-2 text-dark fs-5 bg-info">
                                 {parseFloat(task.workPercentage).toFixed(2)}%
                               </span>
-                              <div className="text-warning">In Process</div>
+                              <div className="text-dark">In Process</div>
                             </>
                           )}
                         </p>
@@ -221,7 +225,11 @@ const ProjectDetails = () => {
                         </thead>
                         <tbody>
                           {project.Tasks.map((task, index) => (
-                            <tr key={index}>
+                            <tr
+                              onClick={() => navigate(`/admin/${id}/addtask`)}
+                              style={{ cursor: "pointer" }}
+                              key={index}
+                            >
                               <td>{task.Title}</td>
                               <td>{task.Description}</td>
                               <td>

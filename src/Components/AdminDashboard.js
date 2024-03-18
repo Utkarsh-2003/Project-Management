@@ -9,10 +9,13 @@ const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
-  const handleRemoveProject = async (projectId) => {
+  const handleRemoveProject = async (projectId, Title) => {
     try {
-      await db.collection("Projects").doc(projectId).delete();
-      console.log("Document successfully deleted!");
+      if (window.confirm(`Are you sure to delete this project: ${Title} ?`)) {
+        await db.collection("Projects").doc(projectId).delete();
+        console.log("Document successfully deleted!");
+        alert("Project Deleted!");
+      }
     } catch (error) {
       console.error("Error removing document: ", error);
     }
@@ -71,12 +74,14 @@ const AdminDashboard = () => {
                               className="btn text-danger text-decoration-none fa-solid fa-trash-can position-absolute top-0 end-0 mt-1"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                handleRemoveProject(project.id);
+                                handleRemoveProject(project.id,project.Title);
                               }}
                               style={{ cursor: "pointer" }}
                             ></button>
                           </h5>
-                          <p className="card-text">{formatDate(project.DueDate)}</p>
+                          <p className="card-text">
+                            {formatDate(project.DueDate)}
+                          </p>
                           <p className="card-text">{project.Description}</p>
                           <div className="d-flex justify-content-start align-items-center">
                             {project.SelectedUsers.map((user, index) => (
@@ -107,14 +112,14 @@ const AdminDashboard = () => {
                   .map((user, index) => (
                     <li key={index} className="d-flex align-items-center mb-3">
                       <div className="container border rounded p-2 shadow">
-                      <Avatar
-                        name={user.name[0]}
-                        size={40}
-                        round={true}
-                        className="me-2"
-                        title={user.name}
-                      />
-                      <span>{user.name}</span>
+                        <Avatar
+                          name={user.name[0]}
+                          size={40}
+                          round={true}
+                          className="me-2"
+                          title={user.name}
+                        />
+                        <span>{user.name}</span>
                       </div>
                     </li>
                   ))}

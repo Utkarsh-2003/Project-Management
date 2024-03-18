@@ -34,7 +34,7 @@ const Navbar = () => {
                 <div class="container-fluid">
                   {isAuthenticated ? (
                     <>
-                      <Link to="dashboard">
+                      <Link to="/admin/dashboard">
                         <img
                           src={Logo}
                           alt="Logo"
@@ -176,7 +176,7 @@ const Navbar = () => {
                       <li class="nav-item">
                         <Link
                           className="navbar-brand text-light mx-3"
-                          to="/Pending"
+                          to="/pending"
                         >
                           Pending
                         </Link>
