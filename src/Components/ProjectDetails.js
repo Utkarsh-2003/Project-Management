@@ -27,23 +27,47 @@ const ProjectDetails = () => {
     getProject();
   }, []);
 
-  useEffect(() => {
+  const workPercentageTasks = () => {
     if (project.Tasks) {
-      workPercentageTasks();
+      let tasks = project.Tasks;
+
+      for (let i = 0; i < tasks.length; i++) {
+        let emp = tasks[i].SelectedUsers;
+        let counter = 0;
+
+        for (let j = 0; j < emp.length; j++) {
+          if (emp[j].Status === "Completed") {
+            counter++;
+          }
+        }
+
+        let work_percentage = (counter * 100) / emp.length;
+        tasks[i].workPercentage = work_percentage;
+      }
     }
+  };
+
+  const calculateProjectPercentage = () => {
+    if (project.Tasks) {
+      let tasks = project.Tasks;
+      let total_percentage = 0;
+
+      for (let i = 0; i < tasks.length; i++) {
+        total_percentage += tasks[i].workPercentage || 0;
+      }
+
+      let project_percentage = total_percentage / tasks.length;
+      setProjectPer(project_percentage);
+    }
+  };
+
+  useEffect(() => {
+    workPercentageTasks();
   }, [project]);
 
-  const workPercentageTasks = () => {
-    let tasks = project.Tasks;
-    let work_percentage = 0; // work percentage
-
-    let counter = 0;
-    for (let i = 0; i < tasks.length; i++) {
-      counter += tasks[i].Percentage;
-    }
-    work_percentage = (counter / tasks.length).toFixed(2);
-    setProjectPer(work_percentage);
-  };
+  useEffect(() => {
+    calculateProjectPercentage();
+  }, [project]);
 
   useEffect(() => {
     if (project.DueDate) {
@@ -93,10 +117,10 @@ const ProjectDetails = () => {
               aria-valuemax="100"
             >
               <div
-                class="progress-bar bg-success"
-                style={{ width: project_per + "%" }}
+                className="progress-bar bg-success"
+                style={{ width: `${project_per}%` }} // Corrected usage of project_per variable
               >
-                {project_per}%
+                {parseFloat(project_per).toFixed(2)}%
               </div>
             </div>
             <div className="row mx-2">
@@ -106,39 +130,33 @@ const ProjectDetails = () => {
                 <>
                   {project.Tasks.map((task, index) => (
                     <div
-                      className="card text-center mx-2 p-0"
+                      className="card text-center mx-3 my-1 p-0"
                       key={index}
                       style={{ maxWidth: "250px" }}
                     >
                       <div className="card-header">{task.Title}</div>
                       <div className="card-body">
                         <p className="card-text">
-                          {task.Percentage === 100 ? (
+                          {task.workPercentage === 100 ? (
                             <>
                               <i className="fa-solid fa-circle-check fs-1 text-success"></i>
+                              <div className="text-success">Completed</div>
                             </>
                           ) : (
                             <>
-                              <span className="border rounded p-1 shadow-sm container bg-info">
-                                {task.Percentage}%
+                              <span className="badge rounded-pill p-2 text-dark fs-5 bg-info">
+                                {parseFloat(task.workPercentage).toFixed(2)}%
                               </span>
+                              <div className="text-warning">In Process</div>
                             </>
                           )}
-                          <div>
-                            {task.Percentage === 100 ? (
-                              <>
-                                <div className="text-success">Completed</div>
-                              </>
-                            ) : (
-                              <>
-                                <div className="text-warning">In Process</div>
-                              </>
-                            )}
-                          </div>
                         </p>
                       </div>
                       <div className="card-footer">
-                        <div>Work Percentage: {task.Percentage}%</div>
+                        <div>
+                          Work Percentage:
+                          {parseFloat(task.workPercentage).toFixed(2)}%
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -187,16 +205,17 @@ const ProjectDetails = () => {
                     <h3 className="mx-2">Tasks</h3>
                     <div
                       className="card p-2 mt-3"
-                      style={{ maxWidth: "600px" }}
+                      style={{ maxWidth: "800px" }}
                     >
                       <table
                         className="table table-hover"
-                        style={{ maxWidth: "700px" }}
+                        style={{ maxWidth: "900px" }}
                       >
                         <thead>
                           <tr>
                             <th className="text-center">Task Name</th>
                             <th className="text-center">Description</th>
+                            <th className="text-center">Users</th>
                             <th className="text-center">Status</th>
                           </tr>
                         </thead>
@@ -205,7 +224,32 @@ const ProjectDetails = () => {
                             <tr key={index}>
                               <td>{task.Title}</td>
                               <td>{task.Description}</td>
-                              <td>{task.Percentage}%</td>
+                              <td>
+                                {task.SelectedUsers.map((user, index) => (
+                                  <div key={index}>
+                                    <span>{user.label}</span>
+                                  </div>
+                                ))}
+                              </td>
+                              <td>
+                                {task.SelectedUsers.map((user, index) => (
+                                  <div key={index}>
+                                    {user.Status === "Completed" ? (
+                                      <>
+                                        <span className="badge rounded-pill bg-success">
+                                          {user.Status}
+                                        </span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <span className="badge rounded-pill text-dark bg-info">
+                                          {user.Status}
+                                        </span>
+                                      </>
+                                    )}
+                                  </div>
+                                ))}
+                              </td>
                             </tr>
                           ))}
                         </tbody>

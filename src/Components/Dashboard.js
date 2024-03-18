@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../Firebase";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Login from "./Login";
 const Dashboard = () => {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
   const [projects, setProjects] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = db.collection("Projects").onSnapshot((snapshot) => {
@@ -35,13 +33,7 @@ const Dashboard = () => {
                   ) : (
                     projects.map((project, index) => (
                       <div key={index} className="col">
-                        <div
-                          className="card shadow"
-                          onClick={() =>
-                            navigate(`/dashboard/project/${project.ProjectId}`)
-                          }
-                          style={{ cursor: "pointer", maxWidth: "350px" }}
-                        >
+                        <div className="card shadow">
                           <div class="card-header fs-2">{project.Title}</div>
                           <div class="card-body">
                             <div className="d-flex">

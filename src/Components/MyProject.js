@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../Firebase";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const MyProject = () => {
   const [projects, setProjects] = useState([]);
   const user = useSelector((state) => state.user.email);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = db.collection("Projects").onSnapshot((snapshot) => {
@@ -35,7 +37,10 @@ const MyProject = () => {
                 <div key={index} className="col">
                   <div
                     className="card h-100 shadow"
-                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      navigate(`/myprojects/project/${project.ProjectId}`)
+                    }
+                    style={{ cursor: "pointer", maxWidth: "350px" }}
                   >
                     <div className="card-body">
                       <h5 className="card-title">{project.Title}</h5>

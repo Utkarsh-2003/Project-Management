@@ -1,7 +1,7 @@
 import React from "react";
 import "../App.css";
 import Logo from "./Images/Logo.png";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { logoutAdmin, logoutUser } from "../Redux/userSlice";

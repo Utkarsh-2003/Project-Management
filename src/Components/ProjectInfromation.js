@@ -9,7 +9,6 @@ const ProjectDetails = () => {
   const [daysLeft, setDaysLeft] = useState(null);
   const [daysOver, setDaysOver] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [project_per, setProjectPer] = useState("");
   const navigate = useNavigate();
 
   const getProject = () => {
@@ -26,24 +25,6 @@ const ProjectDetails = () => {
   useEffect(() => {
     getProject();
   }, []);
-
-  useEffect(() => {
-    if (project.Tasks) {
-      workPercentageTasks();
-    }
-  }, [project]);
-
-  const workPercentageTasks = () => {
-    let tasks = project.Tasks;
-    let work_percentage = 0; // work percentage
-
-    let counter = 0;
-    for (let i = 0; i < tasks.length; i++) {
-      counter += tasks[i].Percentage;
-    }
-    work_percentage = (counter / tasks.length).toFixed(2);
-    setProjectPer(work_percentage);
-  };
 
   useEffect(() => {
     if (project.DueDate) {
@@ -78,7 +59,7 @@ const ProjectDetails = () => {
           <button
             className="btn mx-1 mb-3 mt-3"
             title="back"
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/myprojects")}
           >
             <i className="fa-solid fa-circle-arrow-left fs-3"></i>
           </button>
@@ -124,7 +105,7 @@ const ProjectDetails = () => {
                     <h3 className="mx-2">Tasks</h3>
                     <div
                       className="card p-2 mt-3"
-                      style={{ maxWidth: "600px" }}
+                      style={{ maxWidth: "400px" }}
                     >
                       <table
                         className="table table-hover"
@@ -132,9 +113,8 @@ const ProjectDetails = () => {
                       >
                         <thead>
                           <tr>
-                            <th className="text-center">Task Name</th>
-                            <th className="text-center">Description</th>
-                            <th className="text-center">Status</th>
+                            <th>Task Name</th>
+                            <th>Description</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -142,7 +122,6 @@ const ProjectDetails = () => {
                             <tr key={index}>
                               <td>{task.Title}</td>
                               <td>{task.Description}</td>
-                              <td>{task.Percentage}%</td>
                             </tr>
                           ))}
                         </tbody>

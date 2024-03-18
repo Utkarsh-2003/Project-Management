@@ -24,7 +24,7 @@ const Routers = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/myprojects" element={<MyProject />} />
-        <Route path="/dashboard/project/:id" element={<ProjectInfromation />} />
+        <Route path="/myprojects/project/:id" element={<ProjectInfromation />} />
         <Route path="/pending" element={<Pending />} />
         <Route path="/complete" element={<Completed />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
