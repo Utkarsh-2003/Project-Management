@@ -111,33 +111,35 @@ const ProjectDetails = () => {
                       className="card p-2 mt-3"
                       style={{ maxWidth: "700px" }}
                     >
-                      <table
-                        className="table table-hover"
-                        style={{ maxWidth: "700px" }}
-                      >
-                        <thead>
-                          <tr>
-                            <th>Task Name</th>
-                            <th>Description</th>
-                            <th>Colleagues</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {project.Tasks.map((task, index) => (
-                            <tr key={index}>
-                              <td>{task.Title}</td>
-                              <td>{task.Description}</td>
-                              <td>
-                                {task.SelectedUsers.map((user, index) => (
-                                  <div key={index}>
-                                    <span>{user.label}</span>
-                                  </div>
-                                ))}
-                              </td>
+                      <div className="table-responsive">
+                        <table
+                          className="table table-hover"
+                          style={{ maxWidth: "700px" }}
+                        >
+                          <thead>
+                            <tr>
+                              <th>Task Name</th>
+                              <th>Description</th>
+                              <th>Colleagues</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            {project.Tasks.map((task, index) => (
+                              <tr key={index}>
+                                <td>{task.Title}</td>
+                                <td>{task.Description}</td>
+                                <td>
+                                  {task.SelectedUsers.map((user, index) => (
+                                    <div key={index}>
+                                      <span>{user.label}</span>
+                                    </div>
+                                  ))}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 )}

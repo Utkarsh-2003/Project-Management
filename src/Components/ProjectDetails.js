@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../Firebase";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Avatar from "react-avatar";
 
 const ProjectDetails = () => {
@@ -148,9 +148,7 @@ const ProjectDetails = () => {
                             </>
                           ) : (
                             <>
-                              <span className="fa-regular fa-hourglass-half fs-1 text-info">
-                               
-                              </span>
+                              <span className="fa-regular fa-hourglass-half fs-1 text-info"></span>
                               <div className="text-dark">In Process</div>
                             </>
                           )}
@@ -158,8 +156,10 @@ const ProjectDetails = () => {
                       </div>
                       <div className="card-footer">
                         <div>
-                          Work Percentage:
-                          &nbsp;<strong className="text-dark">{parseFloat(task.workPercentage).toFixed(2)}%</strong>
+                          Work Percentage: &nbsp;
+                          <strong className="text-dark">
+                            {parseFloat(task.workPercentage).toFixed(2)}%
+                          </strong>
                         </div>
                       </div>
                     </div>
@@ -211,57 +211,59 @@ const ProjectDetails = () => {
                       className="card p-2 mt-3"
                       style={{ maxWidth: "800px" }}
                     >
-                      <table
-                        className="table table-hover"
-                        style={{ maxWidth: "900px" }}
-                      >
-                        <thead>
-                          <tr>
-                            <th className="text-center">Task Name</th>
-                            <th className="text-center">Description</th>
-                            <th className="text-center">Users</th>
-                            <th className="text-center">Status</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {project.Tasks.map((task, index) => (
-                            <tr
-                              onClick={() => navigate(`/admin/${id}/addtask`)}
-                              style={{ cursor: "pointer" }}
-                              key={index}
-                            >
-                              <td>{task.Title}</td>
-                              <td>{task.Description}</td>
-                              <td>
-                                {task.SelectedUsers.map((user, index) => (
-                                  <div key={index}>
-                                    <span>{user.label}</span>
-                                  </div>
-                                ))}
-                              </td>
-                              <td>
-                                {task.SelectedUsers.map((user, index) => (
-                                  <div key={index}>
-                                    {user.Status === "Completed" ? (
-                                      <>
-                                        <span className="badge rounded-pill bg-success">
-                                          {user.Status}
-                                        </span>
-                                      </>
-                                    ) : (
-                                      <>
-                                        <span className="badge rounded-pill text-dark bg-info">
-                                          {user.Status}
-                                        </span>
-                                      </>
-                                    )}
-                                  </div>
-                                ))}
-                              </td>
+                      <div className="table-responsive">
+                        <table
+                          className="table table-hover"
+                          style={{ maxWidth: "900px" }}
+                        >
+                          <thead>
+                            <tr>
+                              <th className="text-center">Task Name</th>
+                              <th className="text-center">Description</th>
+                              <th className="text-center">Users</th>
+                              <th className="text-center">Status</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            {project.Tasks.map((task, index) => (
+                              <tr
+                                onClick={() => navigate(`/admin/${id}/addtask`)}
+                                style={{ cursor: "pointer" }}
+                                key={index}
+                              >
+                                <td>{task.Title}</td>
+                                <td>{task.Description}</td>
+                                <td>
+                                  {task.SelectedUsers.map((user, index) => (
+                                    <div key={index}>
+                                      <span>{user.label}</span>
+                                    </div>
+                                  ))}
+                                </td>
+                                <td>
+                                  {task.SelectedUsers.map((user, index) => (
+                                    <div key={index}>
+                                      {user.Status === "Completed" ? (
+                                        <>
+                                          <span className="badge rounded-pill bg-success">
+                                            {user.Status}
+                                          </span>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <span className="badge rounded-pill text-dark bg-info">
+                                            {user.Status}
+                                          </span>
+                                        </>
+                                      )}
+                                    </div>
+                                  ))}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 )}

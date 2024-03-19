@@ -84,7 +84,11 @@ const Pending = () => {
                                           >
                                             Mark as done
                                           </button>
-                                        ) : (<><span className="fa-solid fa-circle-check fs-2 text-success"></span></>) )
+                                        ) : (
+                                          <>
+                                            <span className="fa-solid fa-circle-check fs-2 text-success"></span>
+                                          </>
+                                        ))
                                     )}
                                   </td>
                                 </tr>
