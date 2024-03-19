@@ -30,8 +30,8 @@ const Navbar = () => {
         <>
           {admin ? (
             <>
-              <nav class="navbar navbar-expand-lg bg-dark">
-                <div class="container-fluid">
+              <nav className="navbar navbar-expand-lg bg-dark">
+                <div className="container-fluid">
                   {isAuthenticated ? (
                     <>
                       <Link to="/admin/dashboard">
@@ -49,7 +49,7 @@ const Navbar = () => {
                     </>
                   )}
                   <button
-                    class="navbar-toggler bg-white"
+                    className="navbar-toggler bg-white"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
@@ -57,14 +57,14 @@ const Navbar = () => {
                     aria-expanded="false"
                     aria-label="Toggle navigation"
                   >
-                    <span class="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon"></span>
                   </button>
                   <div
-                    class="collapse navbar-collapse"
+                    className="collapse navbar-collapse"
                     id="navbarSupportedContent"
                   >
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                      <li class="nav-item">
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                      <li className="nav-item">
                         <Link
                           className="navbar-brand text-light mx-3"
                           to="/admin/dashboard"
@@ -72,12 +72,12 @@ const Navbar = () => {
                           Dashboard
                         </Link>
                       </li>
-                      <li class="nav-item">
+                      <li className="nav-item">
                         <Link
                           className="navbar-brand text-light mx-3"
                           to="/admin/add"
                         >
-                          Add Projects
+                          Manage Projects
                         </Link>
                       </li>
                     </ul>
@@ -123,8 +123,8 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <nav class="navbar navbar-expand-lg bg-dark text-white">
-                <div class="container-fluid">
+              <nav className="navbar navbar-expand-lg bg-dark text-white">
+                <div className="container-fluid">
                   {isAuthenticated ? (
                     <>
                       <Link to="dashboard">
@@ -142,7 +142,7 @@ const Navbar = () => {
                     </>
                   )}
                   <button
-                    class="navbar-toggler bg-white"
+                    className="navbar-toggler bg-white"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
@@ -150,14 +150,14 @@ const Navbar = () => {
                     aria-expanded="false"
                     aria-label="Toggle navigation"
                   >
-                    <span class="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon"></span>
                   </button>
                   <div
-                    class="collapse navbar-collapse"
+                    className="collapse navbar-collapse"
                     id="navbarSupportedContent"
                   >
-                    <ul class="logo navbar-nav me-auto mb-2 mb-lg-0">
-                      <li class="nav-item">
+                    <ul className="logo navbar-nav me-auto mb-2 mb-lg-0">
+                      <li className="nav-item">
                         <Link
                           className="navbar-brand text-light mx-3"
                           to="/dashboard"
@@ -165,7 +165,7 @@ const Navbar = () => {
                           Dashboard
                         </Link>
                       </li>
-                      <li class="nav-item">
+                      <li className="nav-item">
                         <Link
                           className="navbar-brand text-light mx-3"
                           to="/myprojects"
@@ -173,7 +173,7 @@ const Navbar = () => {
                           My Projects
                         </Link>
                       </li>
-                      <li class="nav-item">
+                      <li className="nav-item">
                         <Link
                           className="navbar-brand text-light mx-3"
                           to="/pending"
@@ -181,7 +181,7 @@ const Navbar = () => {
                           Pending
                         </Link>
                       </li>
-                      <li class="nav-item">
+                      <li className="nav-item">
                         <Link
                           className="navbar-brand text-light mx-3"
                           to="/complete"

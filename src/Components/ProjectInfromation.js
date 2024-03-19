@@ -56,14 +56,18 @@ const ProjectDetails = () => {
         style={{ maxWidth: "1300px" }}
       >
         <div className="container-fluid">
-          <button
-            className="btn mx-1 mb-3 mt-3"
-            title="back"
-            onClick={() => navigate("/myprojects")}
-          >
-            <i className="fa-solid fa-circle-arrow-left fs-3"></i>
-          </button>
-          <h2 className="text-center mb-4">{project.Title}</h2>
+          <div className="d-flex  border rounded shadow-sm mb-3 p-2">
+            <button
+              className="btn"
+              title="back"
+              onClick={() => navigate("/myprojects")}
+            >
+              <i className="fa-solid fa-circle-arrow-left fs-3"></i>
+            </button>
+            <div className="text-center flex-grow-1">
+              <h2>{project.Title}</h2>
+            </div>
+          </div>
           <div className="row g-2">
             <div className="col-lg-8">
               <div>

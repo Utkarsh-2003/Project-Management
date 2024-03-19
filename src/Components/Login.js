@@ -8,6 +8,7 @@ import auth from "../Firebase";
 import { signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { loginAdmin, loginUser } from "../Redux/userSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -31,11 +32,15 @@ const Login = () => {
         console.log(res);
         const user = res.user;
         if (role === "admin") {
-          alert("Logged in successfully!");
+          toast.success("Login Successful!", {
+            autoClose: 1500,
+          });
           dispatch(loginAdmin({ email, password }));
           navigate("/admin/dashboard");
         } else {
-          alert("Logged in successfully!");
+          toast.success("Login Successful!", {
+            autoClose: 1500,
+          });
           const displayName = user.email;
           updateProfile(user, { displayName });
           dispatch(loginUser({ email, password }));
@@ -73,7 +78,7 @@ const Login = () => {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                     />
-                    <label for="floatingInput">Email address</label>
+                    <label htmlFor="floatingInput">Email address</label>
                   </div>
                   <div className="form-floating mb-3 position-relative">
                     <input
@@ -83,7 +88,7 @@ const Login = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
-                    <label for="floatingInput">Password</label>
+                    <label htmlFor="floatingInput">Password</label>
                     <span
                       className="position-absolute end-0 top-50 translate-middle-y"
                       onClick={handleHidePassword}
@@ -110,7 +115,7 @@ const Login = () => {
                   <div className="text-center">
                     <button
                       type="submit"
-                      className="btn btn-primary btn-block mb-2"
+                      className="btn btn-primary btn-block mb-2 rounded-pill"
                     >
                       Login
                     </button>

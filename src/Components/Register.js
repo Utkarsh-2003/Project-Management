@@ -101,7 +101,7 @@ const Register = () => {
                     onChange={(e) => setUsername(e.target.value)}
                     required
                   />
-                  <label for="floatingInput">Username</label>
+                  <label htmlFor="floatingInput">Username</label>
                 </div>
                 <div className="form-floating form-group mb-2">
                   <input
@@ -113,7 +113,7 @@ const Register = () => {
                     onChange={(e) => setName(e.target.value)}
                     required
                   />
-                  <label for="floatingInput">Name</label>
+                  <label htmlFor="floatingInput">Name</label>
                 </div>
                 <div className="form-floating form-group mb-2">
                   <input
@@ -125,7 +125,7 @@ const Register = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
-                  <label for="floatingInput">Email address</label>
+                  <label htmlFor="floatingInput">Email address</label>
                 </div>
                 <div className="form-floating form-group mb-2 position-relative">
                   <input
@@ -136,7 +136,7 @@ const Register = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
-                  <label for="floatingInput">Password</label>
+                  <label htmlFor="floatingInput">Password</label>
                   <span
                     className="position-absolute end-0 top-50 translate-middle-y"
                     onClick={handleHidePassword}
@@ -154,7 +154,7 @@ const Register = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                   />
-                  <label for="floatingInput">Confirm Password</label>
+                  <label htmlFor="floatingInput">Confirm Password</label>
                 </div>
                 <div>
                   <select
@@ -164,15 +164,13 @@ const Register = () => {
                     value={role}
                     required
                   >
-                    <option selected disabled value="">
-                      Select Role...
-                    </option>
+                    <option defaultValue={true}>Select User Role...</option>
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
                   </select>
                 </div>
                 <div className="text-center mb-2">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary rounded-pill">
                     Register
                   </button>
                 </div>

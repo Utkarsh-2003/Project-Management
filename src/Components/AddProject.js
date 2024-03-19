@@ -146,7 +146,7 @@ const AddProject = () => {
     <>
       <div className="p-3">
         <div className="mb-3">
-          <h1 className="text-center mt-3 mb-3">Add Project</h1>
+          <h1 className="text-center mt-3 mb-3">Add/Manage Project</h1>
           <div
             className="container border shadow rounded p-3"
             style={{ maxWidth: "400px" }}

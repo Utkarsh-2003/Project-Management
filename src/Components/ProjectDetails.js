@@ -32,16 +32,16 @@ const ProjectDetails = () => {
       let tasks = project.Tasks;
 
       for (let i = 0; i < tasks.length; i++) {
-        let emp = tasks[i].SelectedUsers;
+        let user = tasks[i].SelectedUsers;
         let counter = 0;
 
-        for (let j = 0; j < emp.length; j++) {
-          if (emp[j].Status === "Completed") {
+        for (let j = 0; j < user.length; j++) {
+          if (user[j].Status === "Completed") {
             counter++;
           }
         }
 
-        let work_percentage = (counter * 100) / emp.length;
+        let work_percentage = (counter * 100) / user.length;
         tasks[i].workPercentage = work_percentage;
       }
     }
@@ -148,8 +148,8 @@ const ProjectDetails = () => {
                             </>
                           ) : (
                             <>
-                              <span className="badge rounded-pill p-2 text-dark fs-5 bg-info">
-                                {parseFloat(task.workPercentage).toFixed(2)}%
+                              <span className="fa-regular fa-hourglass-half fs-1 text-info">
+                               
                               </span>
                               <div className="text-dark">In Process</div>
                             </>
@@ -159,7 +159,7 @@ const ProjectDetails = () => {
                       <div className="card-footer">
                         <div>
                           Work Percentage:
-                          {parseFloat(task.workPercentage).toFixed(2)}%
+                          &nbsp;<strong className="text-dark">{parseFloat(task.workPercentage).toFixed(2)}%</strong>
                         </div>
                       </div>
                     </div>
