@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const MyProject = () => {
   const [projects, setProjects] = useState([]);
-  const user = useSelector((state) => state.user.email);
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {

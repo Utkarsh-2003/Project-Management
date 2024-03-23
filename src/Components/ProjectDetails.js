@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import { db } from "../Firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import Avatar from "react-avatar";
+import ReactConfetti from "react-confetti";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import { Bar } from "react-chartjs-2";
+import { toast } from "react-toastify";
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -10,6 +15,9 @@ const ProjectDetails = () => {
   const [daysOver, setDaysOver] = useState(0);
   const [loading, setLoading] = useState(true);
   const [project_per, setProjectPer] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [modalShow, setModalShow] = React.useState(false);
+  const [comment, setComment] = useState("");
   const navigate = useNavigate();
 
   const getProject = () => {
@@ -79,6 +87,18 @@ const ProjectDetails = () => {
     }
   }, [project]);
 
+  useEffect(() => {
+    if (project_per === 100) {
+      setShowConfetti(true);
+
+      const timeoutId = setTimeout(() => {
+        setShowConfetti(false);
+      }, 10000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [project_per]);
+
   const calculateDaysLeft = () => {
     const dueDate = new Date(project.DueDate);
     const currentDate = new Date();
@@ -92,8 +112,95 @@ const ProjectDetails = () => {
     return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   };
 
+  const addComment = () => {
+    setModalShow(true);
+  };
+
+  const handleComment = (e) => {
+    e.preventDefault();
+    if (comment.trim() !== "") {
+      db.collection("Projects")
+        .where("ProjectId", "==", id)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            let Comments = doc.data().AdminComments;
+            Comments.push({ dateTime: new Date(), message: comment });
+            doc.ref.update({
+              AdminComments: Comments,
+            });
+          });
+          toast.success("Comment Added!", {
+            autoClose: 1500,
+            position: "top-center",
+          });
+          setModalShow(false);
+          setComment("");
+        });
+    } else {
+      toast.warning("Please enter a comment before sending.", {
+        autoClose: 1500,
+        position: "top-center",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (project.SelectedUsers) {
+      project.SelectedUsers.map((user) => {
+        let count = 0;
+
+        project.Tasks.forEach((task) => {
+          if (
+            task.SelectedUsers.some((userVal) => userVal.value === user.value)
+          ) {
+            count++;
+          }
+        });
+        user.totalTask = count;
+      });
+    }
+  }, [project]);
+
+  // Prepare data for the chart
+  const chartData = project.SelectedUsers
+    ? {
+        labels: project.SelectedUsers.map((user) => user.label),
+        datasets: [
+          {
+            label: "Tasks Assigned",
+            backgroundColor: "rgba(75,192,192,1)",
+            borderColor: "rgba(75,192,192,1)",
+            borderWidth: 1,
+            hoverBackgroundColor: "rgba(75,192,192,0.4)",
+            hoverBorderColor: "rgba(75,192,192,0.2)",
+            data: project.SelectedUsers.map((user) => user.totalTask),
+          },
+        ],
+      }
+    : null;
+
+  const chartOptions = {
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        grid: {
+          display: false, // Hide x-axis grid lines
+        },
+      },
+      y: {
+        grid: {
+          display: false, // Hide y-axis grid lines
+        },
+      },
+    },
+  };
+
   return (
     <div className="p-2">
+      {showConfetti && (
+        <ReactConfetti height={window.innerHeight} width={window.innerWidth} />
+      )}
       <div
         className="container mt-2 mb-2 p-2 border rounded shadow"
         style={{ maxWidth: "1300px" }}
@@ -110,6 +217,26 @@ const ProjectDetails = () => {
             <div className="text-center flex-grow-1">
               <h2>{project.Title}</h2>
             </div>
+            <div>
+              <button
+                className="btn"
+                title="Comment"
+                onClick={() => {
+                  addComment();
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="35"
+                  height="35"
+                  fill="currentColor"
+                  className="bi bi-chat-dots-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M16 8c0 3.866-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7M5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0m4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                </svg>
+              </button>
+            </div>
           </div>
           <div className="p-3 border rounded mb-3 shadow">
             <div
@@ -122,7 +249,7 @@ const ProjectDetails = () => {
             >
               <div
                 className="progress-bar bg-success"
-                style={{ width: `${project_per}%` }} // Corrected usage of project_per variable
+                style={{ width: `${project_per}%` }}
               >
                 {parseFloat(project_per).toFixed(2)}%
               </div>
@@ -148,7 +275,7 @@ const ProjectDetails = () => {
                             </>
                           ) : (
                             <>
-                              <span className="fa-regular fa-hourglass-half fs-1 text-info"></span>
+                              <span className="bi bi-hourglass-split fs-1 text-info"></span>
                               <div className="text-dark">In Process</div>
                             </>
                           )}
@@ -226,11 +353,7 @@ const ProjectDetails = () => {
                           </thead>
                           <tbody>
                             {project.Tasks.map((task, index) => (
-                              <tr
-                                onClick={() => navigate(`/admin/${id}/addtask`)}
-                                style={{ cursor: "pointer" }}
-                                key={index}
-                              >
+                              <tr key={index}>
                                 <td>{task.Title}</td>
                                 <td>{task.Description}</td>
                                 <td>
@@ -265,6 +388,16 @@ const ProjectDetails = () => {
                         </table>
                       </div>
                     </div>
+                    <div className="container shadow border rounded p-3 mt-2">
+                      <h2 className="text-cneter mb-4">Tasks</h2>
+                      <div style={{ maxWidth: "100%", height: "50vh" }}>
+                        <Bar
+                          className="border rounded"
+                          data={chartData}
+                          options={chartOptions}
+                        />
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
@@ -291,10 +424,104 @@ const ProjectDetails = () => {
                     ))}
                 </ul>
               </div>
+              <div
+                className="container border rounded shadow p-3 mt-2"
+                style={{ height: "45vh", overflowY: "auto" }}
+              >
+                <h3>Admin Comments</h3>
+                {loading ? (
+                  <>Loading...</>
+                ) : (
+                  <>
+                    {project.AdminComments.map((comment) => (
+                      <div className="mb-4">
+                        <span
+                          className="bg-info p-2"
+                          style={{ borderRadius: "10px" }}
+                        >
+                          {comment.message}
+                          <sub className="mx-1 mt-1">
+                            {comment.dateTime.toDate().toLocaleString()}
+                          </sub>
+                        </span>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+              <div
+                className="container border rounded shadow p-3 mt-2"
+                style={{ height: "45vh", overflowY: "auto" }}
+              >
+                <h3>User Comments</h3>
+                {loading ? (
+                  <>Loading...</>
+                ) : (
+                  <>
+                    {project.UserComments.map((comment) => (
+                      <div className="mb-1">
+                        <span>
+                          <Avatar
+                            name={comment.user}
+                            size={40}
+                            round={true}
+                            className="mx-1 mb-1"
+                          />
+                        </span>
+                        &nbsp;:&nbsp;
+                        <span
+                          className="bg-primary p-2"
+                          style={{ borderRadius: "10px" }}
+                        >
+                          {comment.message}
+                          <sub className="mx-1">
+                            {comment.dateTime.toDate().toLocaleString()}
+                          </sub>
+                        </span>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Modal component */}
+      <Modal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Add Comment
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form className="form">
+            <textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              rows={5}
+              className="form-control p-3 rounded w-100"
+              placeholder="Enter your comment here..."
+              required
+            />
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={handleComment}>
+            Send
+          </Button>
+          <Button variant="danger" onClick={() => setModalShow(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

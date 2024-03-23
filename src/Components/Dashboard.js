@@ -25,7 +25,7 @@ const Dashboard = () => {
         <>
           <div>
             <div className="p-3">
-              <h1 className="text-center mt-3">Projects</h1>
+              <h1 className="text-center mt-2">Projects</h1>
               <div className="container mt-4 border rounded p-3">
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 p-2">
                   {projects.length === 0 ? ( // Check if projects array is empty
@@ -33,15 +33,13 @@ const Dashboard = () => {
                   ) : (
                     projects.map((project, index) => (
                       <div key={index} className="col">
-                        <div className="card shadow">
-                          <div class="card-header fs-2">{project.Title}</div>
-                          <div class="card-body">
-                            <div className="d-flex">
-                              <strong> Due Date:</strong> &nbsp;
-                              <p className="card-text">
-                                {formatDate(project.DueDate)}
-                              </p>
-                            </div>
+                        <div className="card h-100 shadow">
+                          <div className="card-body">
+                            <h5 className="card-title">{project.Title}</h5>
+                            <p className="card-text">
+                              {formatDate(project.DueDate)}
+                            </p>
+                            <p className="card-text">{project.Description}</p>
                           </div>
                         </div>
                       </div>

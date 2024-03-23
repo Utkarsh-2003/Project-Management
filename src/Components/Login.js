@@ -35,7 +35,7 @@ const Login = () => {
           toast.success("Login Successful!", {
             autoClose: 1500,
           });
-          dispatch(loginAdmin({ email, password }));
+          dispatch(loginAdmin(email));
           navigate("/admin/dashboard");
         } else {
           toast.success("Login Successful!", {
@@ -43,7 +43,7 @@ const Login = () => {
           });
           const displayName = user.email;
           updateProfile(user, { displayName });
-          dispatch(loginUser({ email, password }));
+          dispatch(loginUser(email));
           navigate("/dashboard");
         }
       });

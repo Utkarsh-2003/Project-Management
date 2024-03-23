@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <>
     <div className="p-2">
-      <div className="p-2 mt-2">
+      <div className="p-2 mt-5">
         <div className="row">
           <div className="col-md-6">
             <img

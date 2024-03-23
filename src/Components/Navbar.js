@@ -77,7 +77,15 @@ const Navbar = () => {
                           className="navbar-brand text-light mx-3"
                           to="/admin/add"
                         >
-                          Manage Projects
+                          Add/Manage Projects
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className="navbar-brand text-light mx-3"
+                          to="/admin/users"
+                        >
+                          Users
                         </Link>
                       </li>
                     </ul>
@@ -102,7 +110,7 @@ const Navbar = () => {
                         aria-labelledby="userDropdown"
                       >
                         <li>
-                          <p className="dropdown-item">Hi, {admin.email}!</p>
+                          <p className="dropdown-item">Hi, {admin}!</p>
                         </li>
                         <li>
                           <hr className="dropdown-divider" />
@@ -214,7 +222,7 @@ const Navbar = () => {
                       >
                         <li>
                           <Link to="/profile" className="text-decoration-none">
-                            <p className="dropdown-item">Hi, {user.email}!</p>
+                            <p className="dropdown-item">Hi, {user}!</p>
                           </Link>
                         </li>
                         <li>

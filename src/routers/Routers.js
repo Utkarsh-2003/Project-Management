@@ -13,6 +13,8 @@ import Profile from "../Components/Profile";
 import ProjectInfromation from "../Components/ProjectInfromation";
 import AddTask from "../Components/AddTask";
 import ProjectDetails from "../Components/ProjectDetails";
+import Users from "../Components/Users";
+import Comments from "../Components/Comments";
 
 const Routers = () => {
   return (
@@ -29,6 +31,8 @@ const Routers = () => {
         <Route path="/complete" element={<Completed />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/add" element={<AddProject />} />
+        <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/comment" element={<Comments />} />
         <Route path="/admin/:projectId/addtask" element={<AddTask />} />
         <Route path="/admin/dashboard/project/:id" element={<ProjectDetails />} />
       </Routes>

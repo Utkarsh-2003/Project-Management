@@ -46,6 +46,7 @@ const Register = () => {
                 password: password,
                 name: name,
                 username: username,
+                role: role,
               })
               .then((docRef) => {
                 console.log("Document written with ID:", docRef.id);
@@ -84,18 +85,18 @@ const Register = () => {
             />
           </div>
           <div className="col-md-5">
-            <div className="container register-container py-3 text-center border rounded bg-light shadow">
+            <div className="container mt-4 me-5 py-3 text-center border rounded bg-light shadow">
               <h2 className="text-center mb-4">Register</h2>
               <form
                 className="form-container"
                 onSubmit={handleSubmit}
                 style={{ maxWidth: "300px", margin: "0 auto" }}
               >
-                <div className="form-floating form-group mb-2">
+                <div className="form-floating mb-2">
                   <input
                     type="text"
                     id="username"
-                    className="form-control form-control-lg"
+                    className="form-control"
                     value={username}
                     placeholder="Username"
                     onChange={(e) => setUsername(e.target.value)}
@@ -103,11 +104,11 @@ const Register = () => {
                   />
                   <label htmlFor="floatingInput">Username</label>
                 </div>
-                <div className="form-floating form-group mb-2">
+                <div className="form-floating mb-2">
                   <input
                     type="text"
                     id="name"
-                    className="form-control form-control-lg"
+                    className="form-control"
                     value={name}
                     placeholder="Name"
                     onChange={(e) => setName(e.target.value)}
@@ -115,11 +116,11 @@ const Register = () => {
                   />
                   <label htmlFor="floatingInput">Name</label>
                 </div>
-                <div className="form-floating form-group mb-2">
+                <div className="form-floating mb-2">
                   <input
                     type="email"
                     id="email"
-                    className="form-control form-control-lg"
+                    className="form-control"
                     value={email}
                     placeholder="Email address"
                     onChange={(e) => setEmail(e.target.value)}
@@ -127,11 +128,11 @@ const Register = () => {
                   />
                   <label htmlFor="floatingInput">Email address</label>
                 </div>
-                <div className="form-floating form-group mb-2 position-relative">
+                <div className="form-floating mb-2 position-relative">
                   <input
                     type={type}
                     placeholder="Password"
-                    className="form-control form-control-lg"
+                    className="form-control"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -145,11 +146,11 @@ const Register = () => {
                     <FontAwesomeIcon icon={icon}></FontAwesomeIcon>
                   </span>
                 </div>
-                <div className="form-floating form-group mb-2">
+                <div className="form-floating mb-2">
                   <input
                     type="password"
                     placeholder="Confirm Password"
-                    className="form-control form-control-lg"
+                    className="form-control"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
@@ -170,7 +171,10 @@ const Register = () => {
                   </select>
                 </div>
                 <div className="text-center mb-2">
-                  <button type="submit" className="btn btn-primary rounded-pill">
+                  <button
+                    type="submit"
+                    className="btn btn-primary rounded-pill"
+                  >
                     Register
                   </button>
                 </div>

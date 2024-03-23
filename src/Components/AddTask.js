@@ -147,82 +147,95 @@ const AddTask = () => {
         <>loading...</>
       ) : (
         <>
-          <div className="p-3">
+          <div className="container border rounded p-3">
             <div className="mb-3">
-              <h1 className="text-center mt-3 mb-3">Add Task</h1>
-              <div
-                className="container border shadow rounded p-3"
-                style={{ maxWidth: "400px" }}
-              >
-                <form onSubmit={handleSubmit}>
-                  <div className="form-floating">
-                    <input
-                      type="text"
-                      placeholder="Title"
-                      className="form-control mb-2"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      required
-                    />
-                    <label htmlFor="floatingInput">Title</label>
+              <h1 className="text-center mb-5 ">Add/Manage Tasks</h1>
+              <div className="row g-2">
+                <div className="col-lg-6">
+                  <div
+                    className="container border shadow rounded p-3"
+                    style={{ maxWidth: "400px" }}
+                  >
+                    <form onSubmit={handleSubmit}>
+                      <div className="form-floating">
+                        <input
+                          type="text"
+                          placeholder="Title"
+                          className="form-control mb-2"
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
+                          required
+                        />
+                        <label htmlFor="floatingInput">Title</label>
+                      </div>
+                      <div className="form-floating">
+                        <textarea
+                          placeholder="Description"
+                          rows={5}
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                          className="form-control mb-2 mt-3"
+                          required
+                        />
+                        <label htmlFor="floatingInput">Description</label>
+                      </div>
+                      <Select
+                        className="mb-2"
+                        placeholder="Select User."
+                        closeMenuOnSelect={false}
+                        components={animatedComponents}
+                        options={userOptions}
+                        isMulti
+                        value={selectedUsersForTask}
+                        onChange={(selected) =>
+                          setSelectedUsersForTask(selected)
+                        }
+                      />
+                      <div className="text-center">
+                        <button type="submit" className="btn btn-success">
+                          {editingTaskId ? "Update" : "Add"}
+                        </button>
+                      </div>
+                    </form>
                   </div>
-                  <div className="form-floating">
-                    <textarea
-                      placeholder="Description"
-                      rows={5}
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      className="form-control mb-2 mt-3"
-                      required
-                    />
-                    <label htmlFor="floatingInput">Description</label>
+                </div>
+
+                <div className="col-lg-6">
+                  <div className="table-responsive">
+                    <table
+                      className="table table-bordered mx-auto shadow"
+                      style={{ maxWidth: "500px" }}
+                    >
+                      <thead className="thead-dark">
+                        <tr>
+                          <th className="text-center">Task Name</th>
+                          <th className="text-center">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {tasks.map((task, index) => (
+                          <tr className="mx-2" key={index}>
+                            <td className="text-center">{task.Title}</td>
+                            <td>
+                              <button
+                                className="btn text-warning fa-solid fa-pen-to-square"
+                                onClick={() => editTask(task.TaskId)}
+                              ></button>
+                              <button
+                                className="btn text-danger fa-solid fa-trash-can"
+                                onClick={() =>
+                                  removeTask(task.TaskId, task.Title)
+                                }
+                              ></button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
-                  <Select
-                    className="mb-2"
-                    placeholder="Select User."
-                    closeMenuOnSelect={false}
-                    components={animatedComponents}
-                    options={userOptions}
-                    isMulti
-                    value={selectedUsersForTask}
-                    onChange={(selected) => setSelectedUsersForTask(selected)}
-                  />
-                  <div className="text-center">
-                    <button type="submit" className="btn btn-success">
-                      {editingTaskId ? "Update" : "Add"}
-                    </button>
-                  </div>
-                </form>
+                </div>
               </div>
             </div>
-            <table
-              className="table table-bordered mx-auto"
-              style={{ maxWidth: "500px" }}
-            >
-              <thead className="thead-dark">
-                <tr>
-                  <th className="text-center">Task Name</th>
-                  <th className="text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tasks.map((task, index) => (
-                  <tr className="mx-2" key={index}>
-                    <td className="text-center">{task.Title}</td>
-                    <td>
-                      <button
-                        className="btn text-warning fa-solid fa-pen-to-square"
-                        onClick={() => editTask(task.TaskId)}
-                      ></button>
-                      <button
-                        className="btn text-danger fa-solid fa-trash-can"
-                        onClick={() => removeTask(task.TaskId, task.Title)}
-                      ></button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
         </>
       )}

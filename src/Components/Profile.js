@@ -23,7 +23,7 @@ const Profile = () => {
 
   useEffect(() => {
     db.collection("user")
-      .where("email", "==", user.email)
+      .where("email", "==", user)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
