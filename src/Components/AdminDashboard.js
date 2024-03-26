@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { db } from "../Firebase";
 import "../App.css";
 import Avatar from "react-avatar";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -15,8 +15,7 @@ const AdminDashboard = () => {
     try {
       if (window.confirm(`Are you sure to delete this project: ${Title} ?`)) {
         await db.collection("Projects").doc(projectId).delete();
-        console.log("Document successfully deleted!");
-        toast.success("Project Deleted Successfully");
+        toast.success("Project Deleted Successfully", { autoClose: 1500 });
       }
     } catch (error) {
       console.error("Error removing document: ", error);
@@ -105,7 +104,13 @@ const AdminDashboard = () => {
           </div>
         </>
       ) : (
-        <>You Are Not Authorized To Access This Page.</>
+        <>
+          <div className="text-center mt-5 fs-1">
+            You Are Not Authorized To Access This Page.
+            <br />
+            <Link to="/login">Login</Link>
+          </div>
+        </>
       )}
     </>
   );

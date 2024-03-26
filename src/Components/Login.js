@@ -32,11 +32,18 @@ const Login = () => {
         console.log(res);
         const user = res.user;
         if (role === "admin") {
-          toast.success("Login Successful!", {
-            autoClose: 1500,
-          });
-          dispatch(loginAdmin(email));
-          navigate("/admin/dashboard");
+          if (user.email == "a@gmail.com") {
+            toast.success("Login Successful!", {
+              autoClose: 1500,
+            });
+            dispatch(loginAdmin(email));
+            navigate("/admin/dashboard");
+          } else {
+            toast.error("You are not Admin!", {
+              autoClose: 1500,
+              position: "top-center",
+            });
+          }
         } else {
           toast.success("Login Successful!", {
             autoClose: 1500,
@@ -49,7 +56,10 @@ const Login = () => {
       });
     } catch (error) {
       console.error("Error signing in:", error.message);
-      alert("Error signing in. Please try again.");
+      toast.error("Error signing in. Please try again.", {
+        autoClose: 1500,
+        position: "top-center",
+      });
     }
   };
 

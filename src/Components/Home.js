@@ -21,7 +21,7 @@ const Home = () => {
             <h1 className="mt-5 mb-3 mx-4">Project Management</h1>
             <div className="mx-4">
               <p className="fs-5">
-                Welcome to our project management website, where efficiency
+                Welcome to our Project Management Website, where efficiency
                 meets simplicity. Streamline your projects with intuitive tools
                 designed to enhance collaboration and productivity. From task
                 allocation to progress tracking, empower your team to achieve
