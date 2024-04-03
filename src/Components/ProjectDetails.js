@@ -271,7 +271,7 @@ const ProjectDetails = () => {
                       project_per <= 33.33
                         ? "rounded progress-bar bg-danger progress-bar-striped progress-bar-animated"
                         : project_per >= 66.67
-                        ? "rounded progress-bar bg-success"
+                        ? "rounded progress-bar bg-success progress-bar-striped progress-bar-animated"
                         : "rounded progress-bar bg-primary progress-bar-striped progress-bar-animated"
                     }`}
                     style={

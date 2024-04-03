@@ -13,11 +13,11 @@ body {
   );
 }
 
-.container{
+.container {
   background: aliceblue;
 }
 
-.register-container{
+.register-container {
   margin-bottom: 30px;
   margin-top: 30px;
 }
@@ -47,6 +47,6 @@ body {
   margin-left: 45px;
 }
 
-.comments{
-  background:url(C:\Users\Admin\Desktop\Internship\project-management\src\Components\Images\chat-back.png);
+.comments {
+  background-image: url("C:\Users\Admin\Desktop\Internship\project-management\src\Components\Images\chat-back.png");
 }
