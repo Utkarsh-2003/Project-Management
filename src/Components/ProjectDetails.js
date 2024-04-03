@@ -8,6 +8,8 @@ import Modal from "react-bootstrap/Modal";
 import { Bar } from "react-chartjs-2";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -256,7 +258,7 @@ const ProjectDetails = () => {
                       ? "progress mb-3 border border-danger rounded"
                       : project_per >= 66.67
                       ? "progress mb-3 border border-success rounded"
-                      : "progress mb-3 border border-warning rounded"
+                      : "progress mb-3 border border-primary rounded"
                   }`}
                   role="progressbar"
                   aria-label="Success example"
@@ -270,7 +272,7 @@ const ProjectDetails = () => {
                         ? "rounded progress-bar bg-danger progress-bar-striped progress-bar-animated"
                         : project_per >= 66.67
                         ? "rounded progress-bar bg-success"
-                        : "rounded progress-bar bg-warning progress-bar-striped progress-bar-animated"
+                        : "rounded progress-bar bg-primary progress-bar-striped progress-bar-animated"
                     }`}
                     style={
                       project_per === 100
@@ -298,28 +300,60 @@ const ProjectDetails = () => {
                           <div className="card-header bg-primary-subtle border border-primary">
                             {task.Title}
                           </div>
-                          <div className="card-body border border-dark border-top-0 border-bottom-0">
+                          <div className="card-body border border-dark border-top-0 rounded-bottom">
                             <p className="card-text">
                               {task.workPercentage === 100 ? (
                                 <>
-                                  <i className="fa-solid fa-circle-check fs-1 text-success"></i>
-                                  <div className="text-success">Completed</div>
+                                  <div
+                                    className="mx-auto"
+                                    style={{ width: 80, height: 80 }}
+                                  >
+                                    <CircularProgressbar
+                                      value={task.workPercentage}
+                                      text={
+                                        parseFloat(task.workPercentage).toFixed(
+                                          2
+                                        ) + "%"
+                                      }
+                                      styles={buildStyles({
+                                        pathColor: "#198754",
+                                        textColor: "#198754",
+                                      })}
+                                    />
+                                  </div>
                                 </>
                               ) : (
                                 <>
-                                  <span className="bi bi-hourglass-split fs-1 text-info"></span>
-                                  <div className="text-dark">In Process</div>
+                                  <div
+                                    className="mx-auto"
+                                    style={{ width: 80, height: 80 }}
+                                  >
+                                    <CircularProgressbar
+                                      value={task.workPercentage}
+                                      text={
+                                        parseFloat(task.workPercentage).toFixed(
+                                          2
+                                        ) + "%"
+                                      }
+                                      styles={buildStyles({
+                                        pathColor:
+                                          task.workPercentage <= 33.33
+                                            ? "#dc3545"
+                                            : task.workPercentage >= 66.67
+                                            ? "#198754"
+                                            : "#0d6efd",
+                                        textColor:
+                                          task.workPercentage <= 33.33
+                                            ? "#dc3545"
+                                            : task.workPercentage >= 66.67
+                                            ? "#198754"
+                                            : "#0d6efd",
+                                      })}
+                                    />
+                                  </div>
                                 </>
                               )}
                             </p>
-                          </div>
-                          <div className="card-footer bg-primary-subtle border border-primary">
-                            <div>
-                              Work Percentage: &nbsp;
-                              <strong className="text-dark">
-                                {parseFloat(task.workPercentage).toFixed(2)}%
-                              </strong>
-                            </div>
                           </div>
                         </div>
                       ))}
