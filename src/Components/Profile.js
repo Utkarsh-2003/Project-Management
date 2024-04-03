@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import "../App.css";
 import Avatar from "react-avatar";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
@@ -59,14 +60,22 @@ const Profile = () => {
                 password: password,
               });
             });
-
-            alert(`Data updated`);
+            toast.success("Profile Updated Successfully", {
+              autoClose: 1500,
+              toastId: "update",
+            });
           });
       } else {
-        alert(`Confirm Password does not match`);
+        toast.warning(`Confirm Password does not match`, {
+          autoClose: 1500,
+          toastId: "passnotmatch",
+        });
       }
     } else {
-      alert(`Please fill all the field`);
+      toast.warning(`Please fill all the field`, {
+        autoClose: 1500,
+        toastId: "emptyfield",
+      });
     }
   };
 
@@ -79,7 +88,7 @@ const Profile = () => {
         >
           <h1 className="text-center mt-2">Profile</h1>
           <div
-            className="container-sm border border-3 bg-white shadow rounded p-3 mt-3 mb-3"
+            className="container-sm border border-warning bg-white shadow rounded p-3 mt-3 mb-3"
             style={{ maxWidth: "400px" }}
           >
             <div className="d-flex align-items-center">

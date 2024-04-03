@@ -6,6 +6,7 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const AddTask = () => {
   const { projectId } = useParams();
@@ -40,60 +41,76 @@ const AddTask = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title.trim() || !description.trim()) {
-      alert("Fill in all the details.");
+      toast.warning("Please fill out all fields!", {
+        autoClose: 1500,
+        toastId: "empty",
+      });
     } else {
-      if (editingTaskId) {
-        const updatedTasks = tasks.map((task) =>
-          task.TaskId === editingTaskId
-            ? {
-                ...task,
-                Title: title,
-                Description: description,
-                SelectedUsers: selectedUsersForTask,
-              }
-            : task
-        );
-        db.collection("Projects")
-          .where("ProjectId", "==", projectId)
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              doc.ref.update({
-                Tasks: updatedTasks,
-              });
-            });
-            toast.success("Task Updated!", {
-              autoClose: 1500,
-            });
-            setEditingTaskId(null);
-            setTitle("");
-            setDescription("");
-            setSelectedUsersForTask([]);
-          });
+      const isDuplicateTitle = tasks.some(
+        (task) => task.Title === title && task.TaskId !== editingTaskId
+      );
+      if (isDuplicateTitle) {
+        toast.warning("Task Name Exists!", {
+          autoClose: 1500,
+          toastId: "sametask",
+        });
       } else {
-        db.collection("Projects")
-          .where("ProjectId", "==", projectId)
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              let tasks = doc.data().Tasks;
-              tasks.push({
-                TaskId: taskId,
-                Title: title,
-                Description: description,
-                SelectedUsers: selectedUsersForTask,
+        if (editingTaskId) {
+          // Existing task being edited
+          const updatedTasks = tasks.map((task) =>
+            task.TaskId === editingTaskId
+              ? {
+                  ...task,
+                  Title: title,
+                  Description: description,
+                  SelectedUsers: selectedUsersForTask,
+                }
+              : task
+          );
+          // Update the task in the database
+          db.collection("Projects")
+            .where("ProjectId", "==", projectId)
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                doc.ref.update({
+                  Tasks: updatedTasks,
+                });
               });
-              doc.ref.update({
-                Tasks: tasks,
+              toast.success("Task Updated!", {
+                autoClose: 1500,
               });
+              setEditingTaskId(null);
+              setTitle("");
+              setDescription("");
+              setSelectedUsersForTask([]);
             });
-            toast.success("New Task Added!", {
-              autoClose: 1500,
+        } else {
+          // New task being added
+          db.collection("Projects")
+            .where("ProjectId", "==", projectId)
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                let tasks = doc.data().Tasks;
+                tasks.push({
+                  TaskId: taskId,
+                  Title: title,
+                  Description: description,
+                  SelectedUsers: selectedUsersForTask,
+                });
+                doc.ref.update({
+                  Tasks: tasks,
+                });
+              });
+              toast.success("New Task Added!", {
+                autoClose: 1500,
+              });
+              setTitle("");
+              setDescription("");
+              setSelectedUsersForTask([]);
             });
-            setTitle("");
-            setDescription("");
-            setSelectedUsersForTask([]);
-          });
+        }
       }
     }
   };
@@ -109,23 +126,34 @@ const AddTask = () => {
   };
 
   const removeTask = async (TaskId, Title) => {
-    if (window.confirm(`Are you sure to delete this Task: ${Title} ?`)) {
-      db.collection("Projects")
-        .where("ProjectId", "==", projectId)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const task = doc.data().Tasks.map((item) => item);
-            const new_task = task.filter((val) => val.TaskId !== TaskId);
+    Swal.fire({
+      title: `Are you sure to Delete this Task: <strong>${Title}</strong> ?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      confirmButtonColor: "#198754",
+      cancelButtonText: "No",
+      cancelButtonColor: "#dc3545",
+      width: "450px",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        db.collection("Projects")
+          .where("ProjectId", "==", projectId)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              const task = doc.data().Tasks.map((item) => item);
+              const new_task = task.filter((val) => val.TaskId !== TaskId);
 
-            doc.ref.update({ Tasks: new_task });
-          });
+              doc.ref.update({ Tasks: new_task });
+            });
 
-          toast.error("Task Deleted!", {
-            autoClose: 1500,
+            toast.error("Task Deleted!", {
+              autoClose: 1500,
+            });
           });
-        });
-    }
+      }
+    });
   };
 
   const animatedComponents = makeAnimated();
@@ -157,7 +185,7 @@ const AddTask = () => {
                   <div className="row g-2">
                     <div className="col-lg-6">
                       <div
-                        className="container border shadow rounded p-3"
+                        className="container bg-white border border-dark shadow rounded p-3"
                         style={{ maxWidth: "400px" }}
                       >
                         <form onSubmit={handleSubmit}>
@@ -207,10 +235,10 @@ const AddTask = () => {
                     <div className="col-lg-6">
                       <div className="table-responsive">
                         <table
-                          className="table table-bordered mx-auto shadow"
+                          className="table table-bordered mx-auto shadow border-dark"
                           style={{ maxWidth: "500px" }}
                         >
-                          <thead className="thead-dark">
+                          <thead className="table-dark">
                             <tr>
                               <th className="text-center">Task Name</th>
                               <th className="text-center">Actions</th>

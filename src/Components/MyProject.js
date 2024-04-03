@@ -42,14 +42,14 @@ const MyProject = () => {
                   projects.map((project, index) => (
                     <div key={index} className="col">
                       <div
-                        className="card h-100 shadow"
+                        className="card h-100 shadow-sm border-0"
                         onClick={() =>
                           navigate(`/myprojects/project/${project.ProjectId}`)
                         }
                         style={{ cursor: "pointer", maxWidth: "350px" }}
                       >
-                        <div className="card-body">
-                          <h5 className="card-title">{project.Title}</h5>
+                        <h4 className="card-header bg-primary-subtle border border-primary">{project.Title}</h4>
+                        <div className="card-body border border-dark border-top-0 rounded-bottom">
                           <p className="card-text">
                             {formatDate(project.DueDate)}
                           </p>

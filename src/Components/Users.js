@@ -18,6 +18,7 @@ const Users = () => {
   const admin = useSelector((state) => state.admin);
   const [users, setUsers] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [chartData, setChartData] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,26 +28,29 @@ const Users = () => {
         ...doc.data(),
       }));
       setProjects(data);
-      setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const usersSnapshot = await db.collection("user").get();
-      const usersData = usersSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        totalTask: 0,
-      }));
-      setUsers(usersData);
-      setLoading(false);
-    };
+  const fetchUsers = async () => {
+    const usersSnapshot = await db.collection("user").get();
+    const usersData = usersSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+      totalTask: 0,
+    }));
+    setUsers(usersData);
+    setLoading(false);
+  };
 
+  useEffect(() => {
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    getChartData();
+  }, [users]);
 
   useEffect(() => {
     users.forEach((user) => {
@@ -63,23 +67,24 @@ const Users = () => {
       user.totalTask = count;
     });
     setUsers([...users]);
-    setLoading(false);
   }, [projects]);
 
   // Prepare data for the chart
-  const chartData = {
-    labels: users.map((user) => user.name),
-    datasets: [
-      {
-        label: "Tasks Assigned",
-        backgroundColor: "rgba(75,192,192,1)",
-        borderColor: "rgba(75,192,192,1)",
-        borderWidth: 1,
-        hoverBackgroundColor: "rgba(75,192,192,0.4)",
-        hoverBorderColor: "rgba(75,192,192,0.2)",
-        data: users.map((user) => user.totalTask),
-      },
-    ],
+  const getChartData = () => {
+    setChartData({
+      labels: users.map((user) => user.name.split(" ")[0]),
+      datasets: [
+        {
+          label: "Tasks Assigned",
+          backgroundColor: "rgba(75,192,192,1)",
+          borderColor: "rgba(75,192,192,1)",
+          borderWidth: 1,
+          hoverBackgroundColor: "rgba(75,192,192,0.4)",
+          hoverBorderColor: "rgba(75,192,192,0.2)",
+          data: users.map((user) => user.totalTask),
+        },
+      ],
+    });
   };
 
   const chartOptions = {
@@ -87,12 +92,12 @@ const Users = () => {
     scales: {
       x: {
         grid: {
-          display: false, // Hide x-axis grid lines
+          display: false,
         },
       },
       y: {
         grid: {
-          display: false, // Hide y-axis grid lines
+          display: false,
         },
       },
     },
@@ -119,7 +124,7 @@ const Users = () => {
                               key={index}
                               className="d-flex align-items-center mb-3"
                             >
-                              <div className="container border rounded p-2 shadow">
+                              <div className="container border border-warning rounded p-2 shadow-sm">
                                 <Avatar
                                   name={user.name[0]}
                                   size={40}
@@ -136,10 +141,10 @@ const Users = () => {
                   </div>
                   <div className="col-lg-8">
                     <div className="container shadow border rounded p-2">
-                      <h2 className="text-cneter mb-4">Tasks</h2>
-                      <div style={{ maxWidth: "100%", height: "70vh" }}>
+                      <h2 className="text-cneter mb-4 mx-2">Tasks</h2>
+                      <div style={{ maxWidth: "100%", height: "60vh" }}>
                         <Bar
-                          className="border rounded"
+                          className="p-2 border bg-white border-info rounded"
                           data={chartData}
                           options={chartOptions}
                         />

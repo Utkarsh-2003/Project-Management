@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import Gif from "./Images/Gif Animation.gif";
 import auth, { db } from "../Firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const id = uuidv4();
@@ -29,10 +30,16 @@ const Register = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      toast.warning("Passwords do not match", {
+        autoClose: 1500,
+        toastId: "passwordnotmatch",
+      });
       return;
     } else if (password.length < 6) {
-      alert("Password length should be at least 6 characters.");
+      toast.warning("Password length should be at least 6 characters.", {
+        autoClose: 1500,
+        toastId: "passwordshort",
+      });
     } else {
       db.collection(`${role}`)
         .where("email", "==", email)
@@ -64,11 +71,17 @@ const Register = () => {
 
       try {
         await createUserWithEmailAndPassword(auth, email, password);
-        alert("New User Created.");
+        toast.success("Register Successfully.", {
+          autoClose: 1500,
+          toastId: "registerSuccess",
+        });
         navigate("/login");
       } catch (error) {
         console.error("Error creating user:", error);
-        alert("Error creating user. Please try again.");
+        toast.error("Error creating user!", {
+          autoClose: 1500,
+          toastId: "notregister",
+        });
       }
     }
   };

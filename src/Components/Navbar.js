@@ -83,6 +83,22 @@ const Navbar = () => {
                       <li className="nav-item">
                         <Link
                           className="navbar-brand text-light mx-3"
+                          to="/admin/review"
+                        >
+                          Review Tasks
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className="navbar-brand text-light mx-3"
+                          to="/admin/status"
+                        >
+                          Project Status
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className="navbar-brand text-light mx-3"
                           to="/admin/users"
                         >
                           Users
@@ -135,7 +151,7 @@ const Navbar = () => {
                 <div className="container-fluid">
                   {isAuthenticated ? (
                     <>
-                      <Link to="dashboard">
+                      <Link to="myprojects">
                         <img
                           src={Logo}
                           alt="Logo"
@@ -168,14 +184,6 @@ const Navbar = () => {
                       <li className="nav-item">
                         <Link
                           className="navbar-brand text-light mx-3"
-                          to="/dashboard"
-                        >
-                          Dashboard
-                        </Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link
-                          className="navbar-brand text-light mx-3"
                           to="/myprojects"
                         >
                           My Projects
@@ -187,6 +195,14 @@ const Navbar = () => {
                           to="/pending"
                         >
                           Pending
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className="navbar-brand text-light mx-3"
+                          to="/review"
+                        >
+                          Review
                         </Link>
                       </li>
                       <li className="nav-item">

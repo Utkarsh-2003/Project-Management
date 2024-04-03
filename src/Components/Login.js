@@ -35,6 +35,7 @@ const Login = () => {
           if (user.email == "a@gmail.com") {
             toast.success("Login Successful!", {
               autoClose: 1500,
+              toastId: "login",
             });
             dispatch(loginAdmin(email));
             navigate("/admin/dashboard");
@@ -42,16 +43,18 @@ const Login = () => {
             toast.error("You are not Admin!", {
               autoClose: 1500,
               position: "top-center",
+              toastId: "not_admin",
             });
           }
         } else {
           toast.success("Login Successful!", {
             autoClose: 1500,
+            toastId: "loginuser",
           });
           const displayName = user.email;
           updateProfile(user, { displayName });
           dispatch(loginUser(email));
-          navigate("/dashboard");
+          navigate("/myprojects");
         }
       });
     } catch (error) {
@@ -59,6 +62,7 @@ const Login = () => {
       toast.error("Error signing in. Please try again.", {
         autoClose: 1500,
         position: "top-center",
+        toastId: "failure",
       });
     }
   };

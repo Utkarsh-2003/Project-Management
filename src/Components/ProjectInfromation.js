@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { Button, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import ReactConfetti from "react-confetti";
+import "../App.css";
 
 const ProjectInfromation = () => {
   const { id } = useParams();
@@ -249,7 +250,7 @@ const ProjectInfromation = () => {
                           </div>
                           <h3 className="mx-2">Tasks</h3>
                           <div
-                            className="card p-2 mt-3"
+                            className="card p-2 mt-3 border-dark"
                             style={{ maxWidth: "700px" }}
                           >
                             <div className="table-responsive">
@@ -285,7 +286,7 @@ const ProjectInfromation = () => {
                             </div>
                           </div>
                           <div
-                            className="container border rounded p-3 shadow mt-2"
+                            className="comments border rounded p-3 shadow mt-2 border-success-subtle border-3"
                             style={{ height: "50vh", overflowY: "auto" }}
                           >
                             <h3 className="mb-2">Comments</h3>
@@ -297,53 +298,64 @@ const ProjectInfromation = () => {
                                   {sortedComments.map((comment, index) => (
                                     <div
                                       key={index}
-                                      className={`${
+                                      className={`row ${
                                         comment.user
-                                          ? "text-end mb-1"
-                                          : "text-start mb-4"
+                                          ? "justify-content-end"
+                                          : "justify-content-start"
                                       }`}
                                     >
-                                      {comment.user ? (
-                                        <>
-                                          <span
-                                            className="rounded p-2 text-dark"
-                                            style={{
-                                              background: "#b8b8ff",
-                                              borderRight: "3px solid #8b60d5",
-                                            }}
-                                          >
-                                            {comment.message}
-                                            <sub className="mx-1 mt-1">
-                                              {comment.dateTime
-                                                .toDate()
-                                                .toLocaleString("en-IN")}
-                                            </sub>
-                                          </span>
-                                          <span>
-                                            <Avatar
-                                              name={comment.user}
-                                              size={40}
-                                              round={true}
-                                              className="mx-1 mb-1"
-                                            />
-                                          </span>
-                                        </>
-                                      ) : (
-                                        <span
-                                          className="p-2 rounded text-dark"
-                                          style={{
-                                            background: "#aaf683",
-                                            borderLeft: "3px solid #60d394",
-                                          }}
+                                      <div className="col-10 col-md-8 col-lg-6">
+                                        <div
+                                          className={`${
+                                            comment.user
+                                              ? "text-end mb-1 p-2 rounded "
+                                              : "text-start mb-1 p-2 rounded "
+                                          } comment`}
+                                          style={
+                                            comment.user
+                                              ? {
+                                                  background: "#aaf683",
+                                                  borderRight:
+                                                    "3px solid #60d394",
+                                                }
+                                              : {
+                                                  background: "#b8b8ff",
+                                                  borderLeft:
+                                                    "3px solid #8b60d5",
+                                                }
+                                          }
                                         >
-                                          {comment.message}
-                                          <sub className="mx-1 mt-1">
-                                            {comment.dateTime
-                                              .toDate()
-                                              .toLocaleString("en-IN")}
-                                          </sub>
-                                        </span>
-                                      )}
+                                          {comment.user ? (
+                                            <>
+                                              <span className="text-dark">
+                                                {comment.message}
+                                                <sub className="mx-1 mt-1">
+                                                  {comment.dateTime
+                                                    .toDate()
+                                                    .toLocaleString("en-IN")}
+                                                </sub>
+                                              </span>
+                                              <span>
+                                                <Avatar
+                                                  name={comment.user}
+                                                  size={35}
+                                                  round={true}
+                                                  className="mx-1 mb-1"
+                                                />
+                                              </span>
+                                            </>
+                                          ) : (
+                                            <span className="text-dark">
+                                              {comment.message}
+                                              <sub className="mx-1 mt-1">
+                                                {comment.dateTime
+                                                  .toDate()
+                                                  .toLocaleString("en-IN")}
+                                              </sub>
+                                            </span>
+                                          )}
+                                        </div>
+                                      </div>
                                     </div>
                                   ))}
                                 </>
@@ -357,27 +369,27 @@ const ProjectInfromation = () => {
                   <div className="col-lg-4 mb-3">
                     <div className="container border rounded shadow mb-2 p-2">
                       <h2 className="text-center">Project Status</h2>
-                      <div className="mx-2 fs-4">
+                      <div className="mx-2 fs-3">
                         Progress&nbsp;:&nbsp;
-                        <span className="badge rounded-pill bg-info text-dark fs-5">
+                        <span className="badge rounded-pill bg-info text-dark fs-4">
                           {parseFloat(project_per).toFixed(2)}%
                         </span>
                       </div>
                       <div className="mx-2">
                         {project_per === 100 ? (
                           <>
-                            <span className="fs-4">
+                            <span className="fs-3">
                               Status&nbsp;:&nbsp;
-                              <span className="text-success fs-5">
+                              <span className="text-success fs-4">
                                 Completed
                               </span>
                             </span>
                           </>
                         ) : (
                           <>
-                            <span className="fs-4">
+                            <span className="fs-3">
                               Status&nbsp;:&nbsp;
-                              <span className="text-info fs-5">In Process</span>
+                              <span className="text-info fs-4">In Process</span>
                             </span>
                           </>
                         )}

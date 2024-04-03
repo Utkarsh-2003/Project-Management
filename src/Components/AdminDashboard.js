@@ -5,6 +5,7 @@ import Avatar from "react-avatar";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const AdminDashboard = () => {
   const [projects, setProjects] = useState([]);
@@ -13,10 +14,21 @@ const AdminDashboard = () => {
 
   const handleRemoveProject = async (projectId, Title) => {
     try {
-      if (window.confirm(`Are you sure to delete this project: ${Title} ?`)) {
-        await db.collection("Projects").doc(projectId).delete();
-        toast.success("Project Deleted Successfully", { autoClose: 1500 });
-      }
+      Swal.fire({
+        title: `Are you sure to Delete this project: <strong>${Title}</strong> ?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        confirmButtonColor: "#198754",
+        cancelButtonText: "No",
+        cancelButtonColor: "#dc3545",
+        width: "450px",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          db.collection("Projects").doc(projectId).delete();
+          toast.success("Project Deleted Successfully", { autoClose: 1500 });
+        }
+      });
     } catch (error) {
       console.error("Error removing document: ", error);
     }
@@ -52,7 +64,7 @@ const AdminDashboard = () => {
                       projects.map((project, index) => (
                         <div key={index} className="col">
                           <div
-                            className="h-100 card shadow"
+                            className="h-100 card shadow-sm border-0"
                             onClick={() =>
                               navigate(
                                 `/admin/dashboard/project/${project.ProjectId}`
@@ -60,22 +72,22 @@ const AdminDashboard = () => {
                             }
                             style={{ cursor: "pointer" }}
                           >
-                            <div className="card-body">
-                              <h5 className="card-title position-relative">
-                                {project.Title}
-                                <button
-                                  title="Remove"
-                                  className="btn text-danger text-decoration-none fa-solid fa-trash-can position-absolute top-0 end-0 mt-1"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleRemoveProject(
-                                      project.id,
-                                      project.Title
-                                    );
-                                  }}
-                                  style={{ cursor: "pointer" }}
-                                ></button>
-                              </h5>
+                            <h4 className="card-header border border-primary bg-primary-subtle position-relative">
+                              {project.Title}
+                              <button
+                                title="Remove"
+                                className="btn text-danger text-decoration-none fa-solid fa-trash-can position-absolute top-0 end-0 mt-2"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleRemoveProject(
+                                    project.id,
+                                    project.Title
+                                  );
+                                }}
+                                style={{ cursor: "pointer" }}
+                              ></button>
+                            </h4>
+                            <div className="card-body border border-dark border-top-0 rounded-bottom">
                               <p className="card-text">
                                 {formatDate(project.DueDate)}
                               </p>

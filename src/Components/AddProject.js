@@ -94,6 +94,7 @@ const AddProject = () => {
           console.log("Duplicate Project found");
           toast.warning("Project Name Exists!", {
             autoClose: 1500,
+            toastId: "samename",
           });
         }
       })
@@ -115,6 +116,21 @@ const AddProject = () => {
 
   const handleSaveEditProduct = (e) => {
     e.preventDefault();
+    const projectToEdit = projects.find(
+      (project) => project.id === editingProjectId
+    );
+    if (projectToEdit.Title !== title) {
+      const isDuplicate = projects.some(
+        (project) => project.Title.toLowerCase() === title.toLowerCase()
+      );
+      if (isDuplicate) {
+        toast.warning("Project Name Exists!", {
+          autoClose: 1500,
+          toastId: "sametask",
+        });
+        return;
+      }
+    }
 
     if (
       !title.trim() ||
@@ -122,11 +138,10 @@ const AddProject = () => {
       !description.trim() ||
       selectedUsers.length === 0
     ) {
-      toast.success("Fill in all the details.", {
-        autoClose: 1500,
-      });
+      toast.warning("Fill in all the details.", { autoClose: 1500 });
       return;
     }
+
     db.collection("Projects")
       .doc(editingProjectId)
       .update({
@@ -136,19 +151,17 @@ const AddProject = () => {
         SelectedUsers: selectedUsers,
       })
       .then(() => {
-        toast.success("Project Updated!", {
-          autoClose: 1500,
-        });
+        toast.success("Project Updated!", { autoClose: 1500 });
         console.log("Project updated in Firestore:", editingProjectId);
+        setEditingProjectId(null);
+        setTitle("");
+        setDate("");
+        setDescription("");
+        setSelectedUsers([]);
       })
       .catch((error) => {
         console.error("Error updating project in Firestore: ", error);
       });
-    setEditingProjectId(null);
-    setTitle("");
-    setDate("");
-    setDescription("");
-    setSelectedUsers([]);
   };
 
   const animatedComponents = makeAnimated();
@@ -167,7 +180,7 @@ const AddProject = () => {
             <div className="row g-2">
               <div className="col-lg-6">
                 <div
-                  className="container border shadow rounded p-3"
+                  className="container bg-white border border-dark shadow rounded p-3"
                   style={{ maxWidth: "500px" }}
                 >
                   <form onSubmit={handleSubmit}>
@@ -225,10 +238,10 @@ const AddProject = () => {
               <div className="col-lg-6">
                 <div className="table-responsive">
                   <table
-                    className="table table-bordered mx-auto shadow"
+                    className="table table-bordered mx-auto shadow border border-dark rounded"
                     style={{ maxWidth: "500px" }}
                   >
-                    <thead className="thead-dark">
+                    <thead className="table-dark">
                       <tr>
                         <th className="text-center">Project Name</th>
                         <th className="text-center">Actions</th>

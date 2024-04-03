@@ -35,7 +35,7 @@ const ProjectDetails = () => {
 
   useEffect(() => {
     getProject();
-  }, []);
+  }, [id]);
 
   const workPercentageTasks = () => {
     if (project.Tasks) {
@@ -53,11 +53,11 @@ const ProjectDetails = () => {
 
         let work_percentage = (counter * 100) / user.length;
         tasks[i].workPercentage = work_percentage;
-      }                                    
-      setProject((prevProject) => ({
-        ...prevProject,
-        Tasks: tasks,
-      }));
+      }
+      // setProject((prevProject) => ({
+      //   ...prevProject,
+      //   Tasks: tasks,
+      // }));
     }
   };
 
@@ -251,7 +251,13 @@ const ProjectDetails = () => {
               </div>
               <div className="p-3 border rounded mb-3 shadow">
                 <div
-                  className="progress mb-3"
+                  className={`${
+                    project_per <= 33.33
+                      ? "progress mb-3 border border-danger rounded"
+                      : project_per >= 66.67
+                      ? "progress mb-3 border border-success rounded"
+                      : "progress mb-3 border border-warning rounded"
+                  }`}
                   role="progressbar"
                   aria-label="Success example"
                   aria-valuenow="25"
@@ -259,8 +265,21 @@ const ProjectDetails = () => {
                   aria-valuemax="100"
                 >
                   <div
-                    className="progress-bar bg-success"
-                    style={{ width: `${project_per}%` }}
+                    className={`${
+                      project_per <= 33.33
+                        ? "rounded progress-bar bg-danger progress-bar-striped progress-bar-animated"
+                        : project_per >= 66.67
+                        ? "rounded progress-bar bg-success"
+                        : "rounded progress-bar bg-warning progress-bar-striped progress-bar-animated"
+                    }`}
+                    style={
+                      project_per === 100
+                        ? { width: `${project_per}%` }
+                        : {
+                            width: `${project_per}%`,
+                            animationDirection: "reverse",
+                          }
+                    }
                   >
                     {parseFloat(project_per).toFixed(2)}%
                   </div>
@@ -272,12 +291,14 @@ const ProjectDetails = () => {
                     <>
                       {project.Tasks.map((task, index) => (
                         <div
-                          className="card text-center mx-4 my-1 p-0"
+                          className="card text-center my-2 mx-4 p-0 border-0"
                           key={index}
                           style={{ maxWidth: "250px" }}
                         >
-                          <div className="card-header">{task.Title}</div>
-                          <div className="card-body">
+                          <div className="card-header bg-primary-subtle border border-primary">
+                            {task.Title}
+                          </div>
+                          <div className="card-body border border-dark border-top-0 border-bottom-0">
                             <p className="card-text">
                               {task.workPercentage === 100 ? (
                                 <>
@@ -292,7 +313,7 @@ const ProjectDetails = () => {
                               )}
                             </p>
                           </div>
-                          <div className="card-footer">
+                          <div className="card-footer bg-primary-subtle border border-primary">
                             <div>
                               Work Percentage: &nbsp;
                               <strong className="text-dark">
@@ -385,9 +406,21 @@ const ProjectDetails = () => {
                                             </>
                                           ) : (
                                             <>
-                                              <span className="badge rounded-pill text-dark bg-info">
-                                                {user.Status}
-                                              </span>
+                                              {user.Status === "In Process" ? (
+                                                <>
+                                                  <>
+                                                    <span className="badge rounded-pill text-dark bg-info">
+                                                      {user.Status}
+                                                    </span>
+                                                  </>
+                                                </>
+                                              ) : (
+                                                <>
+                                                  <span className="badge rounded-pill text-dark bg-warning">
+                                                    {user.Status}
+                                                  </span>
+                                                </>
+                                              )}
                                             </>
                                           )}
                                         </div>
@@ -403,7 +436,7 @@ const ProjectDetails = () => {
                           <h2 className="text-cneter mb-4">Tasks</h2>
                           <div style={{ maxWidth: "100%", height: "50vh" }}>
                             <Bar
-                              className="border rounded"
+                              className="border border-info rounded"
                               data={chartData}
                               options={chartOptions}
                             />
