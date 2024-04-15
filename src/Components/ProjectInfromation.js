@@ -274,7 +274,9 @@ const ProjectInfromation = () => {
                                         {task.SelectedUsers.map(
                                           (user, index) => (
                                             <div key={index}>
-                                              <span>{user.label}</span>
+                                              <span>
+                                                {user.label.split(" ")[0]}
+                                              </span>
                                             </div>
                                           )
                                         )}

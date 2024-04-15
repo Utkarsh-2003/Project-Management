@@ -124,7 +124,7 @@ const Users = () => {
                               key={index}
                               className="d-flex align-items-center mb-3"
                             >
-                              <div className="container border border-warning rounded p-2 shadow-sm">
+                              <div className="container border border-info rounded p-2 shadow-sm">
                                 <Avatar
                                   name={user.name[0]}
                                   size={40}

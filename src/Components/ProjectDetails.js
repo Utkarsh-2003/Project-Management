@@ -268,15 +268,18 @@ const ProjectDetails = () => {
                 >
                   <div
                     className={`${
-                      project_per <= 33.33
+                      project_per <= 33
                         ? "rounded progress-bar bg-danger progress-bar-striped progress-bar-animated"
-                        : project_per >= 66.67
+                        : project_per >= 66
                         ? "rounded progress-bar bg-success progress-bar-striped progress-bar-animated"
                         : "rounded progress-bar bg-primary progress-bar-striped progress-bar-animated"
                     }`}
                     style={
                       project_per === 100
-                        ? { width: `${project_per}%` }
+                        ? {
+                            width: `${project_per}%`,
+                            animationDirection: "reverse",
+                          }
                         : {
                             width: `${project_per}%`,
                             animationDirection: "reverse",
@@ -286,14 +289,15 @@ const ProjectDetails = () => {
                     {parseFloat(project_per).toFixed(2)}%
                   </div>
                 </div>
-                <div className="row mx-2">
+                <div className="row g-2 mx-2">
                   {loading ? (
                     <>loading...</>
                   ) : (
                     <>
                       {project.Tasks.map((task, index) => (
+                        <div className="col-md-3">
                         <div
-                          className="card text-center my-2 mx-4 p-0 border-0"
+                          className="card text-center my-2 p-0 border-0"
                           key={index}
                           style={{ maxWidth: "250px" }}
                         >
@@ -337,15 +341,15 @@ const ProjectDetails = () => {
                                       }
                                       styles={buildStyles({
                                         pathColor:
-                                          task.workPercentage <= 33.33
+                                          task.workPercentage <= 33
                                             ? "#dc3545"
-                                            : task.workPercentage >= 66.67
+                                            : task.workPercentage >= 66
                                             ? "#198754"
                                             : "#0d6efd",
                                         textColor:
-                                          task.workPercentage <= 33.33
+                                          task.workPercentage <= 33
                                             ? "#dc3545"
-                                            : task.workPercentage >= 66.67
+                                            : task.workPercentage >= 66
                                             ? "#198754"
                                             : "#0d6efd",
                                       })}
@@ -355,6 +359,7 @@ const ProjectDetails = () => {
                               )}
                             </p>
                           </div>
+                        </div>
                         </div>
                       ))}
                     </>
@@ -425,7 +430,9 @@ const ProjectDetails = () => {
                                     <td>
                                       {task.SelectedUsers.map((user, index) => (
                                         <div key={index}>
-                                          <span>{user.label}</span>
+                                          <span>
+                                            {user.label.split(" ")[0]}
+                                          </span>
                                         </div>
                                       ))}
                                     </td>

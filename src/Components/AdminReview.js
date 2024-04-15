@@ -89,7 +89,7 @@ const AdminReview = () => {
                 .update(updatedProjectData)
                 .then(() => {
                   Swal.fire({
-                    text: `Task submitted.`,
+                    text: `Task completed.`,
                     icon: "success",
                   });
                 })
@@ -280,7 +280,7 @@ const AdminReview = () => {
                                                       )
                                                     }
                                                   >
-                                                    Mark as In Process
+                                                    Mark for Rework
                                                   </button>
                                                   <button
                                                     className="btn btn-sm btn-success mx-2 mb-1"
@@ -293,7 +293,7 @@ const AdminReview = () => {
                                                       )
                                                     }
                                                   >
-                                                    Mark as Completed
+                                                    Mark as Done
                                                   </button>
                                                 </td>
                                               </tr>
