@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../Firebase";
+import { db } from "../../Firebase";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
-import "../App.css";
+import "../../App.css";
 import Avatar from "react-avatar";
 import { toast } from "react-toastify";
 

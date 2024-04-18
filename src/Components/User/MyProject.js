@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../Firebase";
+import { db } from "../../Firebase";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 

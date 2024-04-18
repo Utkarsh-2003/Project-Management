@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../Firebase";
+import { db } from "../../Firebase";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Avatar from "react-avatar";
 import ReactConfetti from "react-confetti";

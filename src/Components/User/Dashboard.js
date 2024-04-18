@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../Firebase";
+import { db } from "../../Firebase";
 import { useSelector } from "react-redux";
-import Login from "./Login";
+import Login from "../Login";
 const Dashboard = () => {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
   const [projects, setProjects] = useState([]);

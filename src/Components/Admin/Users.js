@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../Firebase";
+import { db } from "../../Firebase";
 import Avatar from "react-avatar";
 import { Bar } from "react-chartjs-2";
 import {

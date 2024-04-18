@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../Firebase";
+import { db } from "../../Firebase";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Avatar from "react-avatar";
 import { useSelector } from "react-redux";
 import { Button, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import ReactConfetti from "react-confetti";
-import "../App.css";
+import "../../App.css";
 
 const ProjectInfromation = () => {
   const { id } = useParams();

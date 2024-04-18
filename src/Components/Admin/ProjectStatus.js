@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../Firebase";
+import { db } from "../../Firebase";
 import { useNavigate } from "react-router-dom";
 
 const ProjectStatus = () => {

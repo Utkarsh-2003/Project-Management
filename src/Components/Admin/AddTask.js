@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { db } from "../Firebase";
+import { db } from "../../Firebase";
 import { v4 } from "uuid";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
